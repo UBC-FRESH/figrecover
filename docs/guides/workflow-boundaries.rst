@@ -14,6 +14,11 @@ Current durable boundary:
 * outputs include recovered values, pixel coordinates, confidence, and
   diagnostics.
 
+Digitization records can carry source provenance, including image ID, document
+ID, figure ID, figure label, source PDF, source page, crop bounding box,
+extraction tool, tool version, and extractor settings. CSV exports can include
+these provenance fields when combining results across documents.
+
 Current diagnostic codes include:
 
 * ``no_pixels_matched`` when a series colour is not found;

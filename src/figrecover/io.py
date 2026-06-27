@@ -15,11 +15,13 @@ def write_result_json(result: DigitizeResult, path: Path) -> Path:
     return path
 
 
-def write_points_csv(result: DigitizeResult, path: Path) -> Path:
+def write_points_csv(
+    result: DigitizeResult, path: Path, *, include_provenance: bool = False
+) -> Path:
     """Write recovered points as a flat CSV table."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    result.to_dataframe().to_csv(path, index=False)
+    result.to_dataframe(include_provenance=include_provenance).to_csv(path, index=False)
     return path
 
 

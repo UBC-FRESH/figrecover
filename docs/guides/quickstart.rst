@@ -56,3 +56,12 @@ Use the Python API when integrating into a larger system:
 
    result = digitize_image(Path("crop.png"), spec)
    result.to_dataframe().to_csv("harvest.csv", index=False)
+
+When combining many figures, include provenance columns:
+
+.. code-block:: python
+
+   result.to_dataframe(include_provenance=True).to_csv(
+       "harvest_with_provenance.csv",
+       index=False,
+   )

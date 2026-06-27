@@ -20,3 +20,7 @@ This is the append-only project narrative for `figrecover`.
   settings to support top-edge recovery from filled area charts.
 - Added structured extraction diagnostics for clipped matches, sparse results,
   filtered components/runs, no-match cases, and missing plot bounds.
+- Added source/crop/toolchain provenance fields to image-level digitization
+  records and optional provenance columns for recovered-point exports.
+- Closed the Phase 2 implementation slice locally with calibrated image-crop
+  records, extraction, diagnostics, tests, docs, and Phase 3 inputs.

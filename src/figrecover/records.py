@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from figrecover.calibration import AxisCalibration, Calibration, CalibrationProposal
 from figrecover.models import (
+    CropBoundingBox,
     DataPoint,
     Diagnostic,
     DigitizeResult,
@@ -154,6 +155,7 @@ __all__ = [
     "CalibrationProposal",
     "ChartMetadata",
     "ChartType",
+    "CropBoundingBox",
     "DataPoint",
     "Diagnostic",
     "DigitizeResult",
