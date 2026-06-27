@@ -18,6 +18,8 @@ Phase 2 should focus on:
 - keeping existing `Calibration` behavior stable;
 - exposing deterministic extraction through an `extraction` module while
   retaining backwards-compatible imports where practical;
+- using stable diagnostic codes for no-match, clipped-to-plot, low-confidence,
+  ambiguous-component, and missing-bounds cases;
 - expanding synthetic tests for bars, multi-series charts, log axes, noisy
   images, and diagnostic stability;
 - documenting the manual calibrated image-crop workflow in Sphinx.

@@ -17,6 +17,10 @@ Digitization Models
 .. automodule:: figrecover.models
    :members:
 
+Extraction diagnostics are structured records with a severity level, stable
+code, human-readable message, and context dictionary. Downstream workflows
+should use diagnostic codes rather than parsing messages.
+
 Workflow Records
 ----------------
 

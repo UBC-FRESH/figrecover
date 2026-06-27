@@ -13,6 +13,8 @@ LineAggregation = Literal["median", "min", "max"]
 
 
 class Diagnostic(BaseModel):
+    """A structured extraction or workflow diagnostic."""
+
     level: Literal["info", "warning", "error"]
     code: str
     message: str

@@ -186,3 +186,138 @@ def test_line_digitizer_can_follow_top_edge_of_filled_area(tmp_path: Path):
 
     assert len(frame) >= 95
     assert frame["y"].median() == pytest.approx(70, abs=1)
+
+
+def test_line_digitizer_recovers_log_axis_values(tmp_path: Path):
+    image_path = tmp_path / "log_line.png"
+    image = Image.new("RGB", (120, 120), "white")
+    draw = ImageDraw.Draw(image)
+    draw.line([(10, 110), (60, 60), (110, 10)], fill="#1f77b4", width=3)
+    image.save(image_path)
+
+    calibration = Calibration.from_plot_bounds(
+        plot_left=10,
+        plot_right=110,
+        plot_top=10,
+        plot_bottom=110,
+        x_min=1,
+        x_max=100,
+        y_min=1,
+        y_max=100,
+        x_scale="log10",
+        y_scale="log10",
+    )
+    spec = DigitizeSpec(
+        calibration=calibration,
+        series=[SeriesSpec(name="log_line", color="#1f77b4", mode="line", tolerance=5)],
+    )
+
+    result = digitize_image(image_path, spec)
+    frame = result.to_dataframe()
+    mid = frame.iloc[(frame["x"] - 10).abs().argmin()]
+
+    assert mid["x"] == pytest.approx(10, rel=0.12)
+    assert mid["y"] == pytest.approx(10, rel=0.12)
+
+
+def test_digitizer_warns_when_matched_pixels_are_clipped_to_plot(tmp_path: Path):
+    image_path = tmp_path / "clipped.png"
+    image = Image.new("RGB", (120, 120), "white")
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0, 40, 119, 80), fill="#59fe01")
+    image.save(image_path)
+
+    calibration = Calibration.from_plot_bounds(
+        plot_left=20,
+        plot_right=100,
+        plot_top=20,
+        plot_bottom=100,
+        x_min=0,
+        x_max=100,
+        y_min=0,
+        y_max=100,
+    )
+    spec = DigitizeSpec(
+        calibration=calibration,
+        series=[
+            SeriesSpec(
+                name="area",
+                color="#59fe01",
+                mode="line",
+                line_aggregation="min",
+                tolerance=5,
+            )
+        ],
+    )
+
+    result = digitize_image(image_path, spec)
+    codes = [diagnostic.code for diagnostic in result.series[0].diagnostics]
+
+    assert "matched_pixels_clipped_to_plot" in codes
+
+
+def test_line_digitizer_warns_on_sparse_line_coverage(tmp_path: Path):
+    image_path = tmp_path / "sparse.png"
+    image = Image.new("RGB", (120, 120), "white")
+    draw = ImageDraw.Draw(image)
+    draw.point((20, 80), fill="#1f77b4")
+    draw.point((100, 40), fill="#1f77b4")
+    image.save(image_path)
+
+    calibration = Calibration.from_plot_bounds(
+        plot_left=10,
+        plot_right=110,
+        plot_top=10,
+        plot_bottom=110,
+        x_min=0,
+        x_max=100,
+        y_min=0,
+        y_max=100,
+    )
+    spec = DigitizeSpec(
+        calibration=calibration,
+        series=[SeriesSpec(name="sparse", color="#1f77b4", mode="line", tolerance=5)],
+    )
+
+    result = digitize_image(image_path, spec)
+    codes = [diagnostic.code for diagnostic in result.series[0].diagnostics]
+
+    assert "low_confidence_extraction" in codes
+
+
+def test_scatter_digitizer_reports_filtered_components(tmp_path: Path):
+    image_path = tmp_path / "scatter_noise.png"
+    image = Image.new("RGB", (120, 120), "white")
+    draw = ImageDraw.Draw(image)
+    draw.ellipse((57, 57, 63, 63), fill="#d62728")
+    draw.point((20, 20), fill="#d62728")
+    draw.point((90, 90), fill="#d62728")
+    image.save(image_path)
+
+    calibration = Calibration.from_plot_bounds(
+        plot_left=10,
+        plot_right=110,
+        plot_top=10,
+        plot_bottom=110,
+        x_min=0,
+        x_max=100,
+        y_min=0,
+        y_max=100,
+    )
+    spec = DigitizeSpec(
+        calibration=calibration,
+        series=[
+            SeriesSpec(
+                name="points",
+                color="#d62728",
+                mode="scatter",
+                tolerance=5,
+                min_component_pixels=4,
+            )
+        ],
+    )
+
+    result = digitize_image(image_path, spec)
+    codes = [diagnostic.code for diagnostic in result.series[0].diagnostics]
+
+    assert "ambiguous_components_filtered" in codes

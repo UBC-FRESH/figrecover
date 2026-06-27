@@ -18,3 +18,5 @@ This is the append-only project narrative for `figrecover`.
   Phase 2 task issues for the first implementation lane.
 - Added a local TFL 6 PDF prototype harness note and extended line extraction
   settings to support top-edge recovery from filled area charts.
+- Added structured extraction diagnostics for clipped matches, sparse results,
+  filtered components/runs, no-match cases, and missing plot bounds.
