@@ -91,6 +91,8 @@ GitHub parent issue: #32
 
 Active branch: `feature/p5-qa-review-human-workflows`
 
+Pull request: TBD
+
 Goal: make recovered data inspectable and defensible.
 
 - [x] P5.1 Add overlay generation. Child issue: #33.
@@ -99,7 +101,7 @@ Goal: make recovered data inspectable and defensible.
 - [x] P5.4 Add CLI review commands. Child issue: #36.
 - [x] P5.5 Document QA workflow. Child issue: #37.
 
-Status: active.
+Status: complete.
 
 ## Phase 6: Batch Corpus Pipeline
 
