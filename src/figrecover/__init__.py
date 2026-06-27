@@ -15,6 +15,7 @@ from figrecover.models import (
     SeriesSpec,
 )
 from figrecover.records import BoundingBox, FigureCandidate, RenderedPage, SourceDocument
+from figrecover.vlm import ChartMetadataProposal, ChartTriageRequest, ChartTriageResult
 
 __all__ = [
     "BoundingBox",
@@ -29,6 +30,9 @@ __all__ = [
     "SeriesResult",
     "SeriesSpec",
     "SourceDocument",
+    "ChartMetadataProposal",
+    "ChartTriageRequest",
+    "ChartTriageResult",
     "crop_figure_candidates",
     "extract_pymupdf_image_candidates",
     "extract_image",

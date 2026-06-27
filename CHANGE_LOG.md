@@ -36,3 +36,21 @@ This is the append-only project narrative for `figrecover`.
   Phase 4 VLM assistance inputs.
 - Added planned Phase 9 for pyOpenSci package peer review and JOSS companion
   paper publication once `figrecover` is v1.0.0 release-ready.
+- Launched Phase 4 with GitHub parent and child issues for the local VLM
+  assistance layer, including proposal records, local backend interface,
+  structured prompts, self-ensemble utilities, and GPU/system docs.
+- Added VLM proposal records for chart triage requests/results, metadata
+  proposals, legend/tick/series-colour proposals, calibration hints, prompt
+  provenance, raw responses, and validation diagnostics.
+- Added a local VLM backend protocol and OpenAI-compatible backend boundary
+  with lazy optional HTTP transport, image-plus-text request construction,
+  structured proposal parsing, raw-response capture, and mocked backend tests.
+- Added versioned structured VLM prompt templates and JSON response parsing
+  helpers with diagnostics for markdown fences, surrounding response text,
+  invalid JSON, non-object JSON, and schema validation failures.
+- Added conservative VLM self-ensemble utilities that summarize repeated
+  metadata proposal agreement, flag disagreements, preserve request IDs, and
+  avoid numeric data-table averaging.
+- Completed Phase 4 with local VLM assistance records, an OpenAI-compatible
+  backend boundary, structured prompt templates, response parsing diagnostics,
+  metadata self-ensemble summaries, and local VLM system documentation.

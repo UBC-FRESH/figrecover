@@ -57,10 +57,12 @@ Current diagnostic codes include:
 Planned optional layers:
 
 * heavier document parser adapters for candidate figures and captions;
-* local VLM assistance for chart type, labels, legends, series colours, and
-  calibration proposals;
 * QA overlays and review manifests;
 * FEMIC/FHOPS export adapters.
 
-VLM outputs are proposals. They should help reduce manual work, but calibrated
-geometry remains the preferred numeric source whenever it is feasible.
+Local VLM assistance can propose chart type, labels, legends, series colours,
+calibration hints, and warnings. VLM outputs are proposals. They should help
+reduce manual work, but calibrated
+geometry remains the preferred numeric source whenever it is feasible. VLM
+records preserve prompt, backend, model, raw response, parsed proposal, and
+diagnostic metadata so downstream review can audit how a proposal was produced.
