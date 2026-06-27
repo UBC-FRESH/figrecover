@@ -88,3 +88,5 @@ This is the append-only project narrative for `figrecover`.
 - Added publication-safe examples for synthetic chart extraction, synthetic PDF
   corpus rendering, and mocked VLM metadata parsing, with Sphinx example docs
   and smoke-test coverage.
+- Added public CI for Ruff, pytest, Sphinx, package build, and Twine metadata
+  checks across Python 3.11 and 3.12, plus development-check documentation.
