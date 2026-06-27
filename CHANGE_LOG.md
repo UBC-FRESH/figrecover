@@ -27,3 +27,7 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 3 with GitHub parent and child issues for PDF rendering,
   figure manifests, optional parser adapters, CLI commands, and synthetic PDF
   tests.
+- Added Phase 3 PDF rendering, JSONL figure manifests, manifest-driven cropping,
+  `figrecover pdf render`, `figrecover figures list`, `figrecover figures crop`,
+  synthetic PDF tests, and document-preparation docs. Parser adapter work remains
+  open for P3.3.

@@ -60,11 +60,11 @@ Active branch: `feature/p3-document-ingestion-figure-cropping`
 
 Goal: turn PDFs into auditable figure candidates without requiring VLMs.
 
-- [ ] P3.1 Add PDF rendering. Child issue: #21.
-- [ ] P3.2 Add figure candidate manifest. Child issue: #22.
+- [x] P3.1 Add PDF rendering. Child issue: #21.
+- [x] P3.2 Add figure candidate manifest. Child issue: #22.
 - [ ] P3.3 Add parser adapters behind extras. Child issue: #20.
-- [ ] P3.4 Add PDF and figure CLI commands. Child issue: #19.
-- [ ] P3.5 Test with synthetic PDFs. Child issue: #23.
+- [x] P3.4 Add PDF and figure CLI commands. Child issue: #19.
+- [x] P3.5 Test with synthetic PDFs. Child issue: #23.
 
 Status: active.
 

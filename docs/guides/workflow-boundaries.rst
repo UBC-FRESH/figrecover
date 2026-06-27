@@ -19,6 +19,23 @@ ID, figure ID, figure label, source PDF, source page, crop bounding box,
 extraction tool, tool version, and extractor settings. CSV exports can include
 these provenance fields when combining results across documents.
 
+Phase 3 document preparation renders PDF pages and records candidate figure
+regions before chart digitization happens. This layer remains deterministic:
+PDF rendering uses PyMuPDF behind the optional ``pdf`` extra, and figure
+candidates are stored as explicit manifest entries.
+
+The first supported document-preparation workflow is:
+
+#. Render selected PDF pages to ignored local image artifacts.
+#. Create or load a JSONL figure candidate manifest.
+#. Crop manifest candidates into figure images.
+#. Pass prepared crops to the calibrated extraction core.
+
+Figure candidate manifests are auditable work queues, not proof that a crop
+contains a recoverable chart. Each entry should preserve source document, page
+number, bounding box, candidate source, confidence, image paths, and any caption
+text available from a parser or manual review.
+
 Current diagnostic codes include:
 
 * ``no_pixels_matched`` when a series colour is not found;
@@ -33,7 +50,6 @@ Current diagnostic codes include:
 
 Planned optional layers:
 
-* PDF page rendering and figure manifests;
 * document parser adapters for candidate figures and captions;
 * local VLM assistance for chart type, labels, legends, series colours, and
   calibration proposals;

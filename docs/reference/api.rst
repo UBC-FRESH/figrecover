@@ -32,6 +32,15 @@ Workflow Records
    :members:
    :no-index:
 
+Documents And Manifests
+-----------------------
+
+.. automodule:: figrecover.documents
+   :members:
+
+.. automodule:: figrecover.manifest
+   :members:
+
 Digitization
 ------------
 
