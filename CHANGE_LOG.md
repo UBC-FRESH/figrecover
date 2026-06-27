@@ -61,3 +61,12 @@ This is the append-only project narrative for `figrecover`.
   reference entries, and a Sphinx guide for human-in-the-loop review.
 - Completed Phase 5 with all QA/review child issues closed, verification
   passing, and Phase 6 corpus pipeline inputs recorded.
+- Launched Phase 6 with GitHub parent and child issues for corpus pipeline
+  config, workstation execution, artifact layout, failure recovery, and corpus
+  CLI commands.
+- Added Phase 6 corpus pipeline support with config records, artifact layout
+  helpers, run manifests, deterministic PDF rendering/cropping execution,
+  resume and failure diagnostics, accepted-table export, corpus CLI commands,
+  synthetic tests, and corpus workflow documentation.
+- Completed Phase 6 with all corpus pipeline child issues closed, verification
+  passing, and Phase 7 FEMIC/FHOPS integration inputs recorded.

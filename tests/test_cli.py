@@ -305,3 +305,71 @@ def test_review_export_accepted_cli_copies_only_accepted_tables(tmp_path: Path):
     assert '"exported_count": 1' in output.stdout
     assert (tmp_path / "accepted" / "accepted-1.csv").exists()
     assert not (tmp_path / "accepted" / "rejected-1.csv").exists()
+
+
+def test_corpus_cli_init_run_summarize_and_export(tmp_path: Path):
+    fitz = __import__("pytest").importorskip("fitz")
+    pdf_path = tmp_path / "source.pdf"
+    document = fitz.open()
+    document.new_page(width=72, height=72)
+    document.save(pdf_path)
+    document.close()
+    config_path = tmp_path / "corpus-config.json"
+    output_root = tmp_path / "corpus"
+
+    init = CliRunner().invoke(
+        app,
+        [
+            "corpus",
+            "init",
+            str(output_root),
+            "--pdf",
+            str(pdf_path),
+            "--config-path",
+            str(config_path),
+            "--dpi",
+            "72",
+        ],
+    )
+
+    assert init.exit_code == 0
+    assert config_path.exists()
+    assert (output_root / "manifests" / "run-manifest.json").exists()
+
+    run = CliRunner().invoke(app, ["corpus", "run", str(config_path)])
+
+    assert run.exit_code == 0
+    assert '"document_count": 1' in run.stdout
+    run_manifest = output_root / "manifests" / "run-manifest.json"
+
+    summary = CliRunner().invoke(app, ["corpus", "summarize", str(run_manifest)])
+
+    assert summary.exit_code == 0
+    assert '"document_count": 1' in summary.stdout
+
+    accepted_table = tmp_path / "accepted.csv"
+    rejected_table = tmp_path / "rejected.csv"
+    accepted_table.write_text("series,x,y\nseries,1,2\n", encoding="utf-8")
+    rejected_table.write_text("series,x,y\nseries,3,4\n", encoding="utf-8")
+    review_manifest = tmp_path / "review.jsonl"
+    ReviewManifest.from_entries(
+        [
+            ReviewEntry(review_id="accepted", status="accepted", table_path=accepted_table),
+            ReviewEntry(review_id="rejected", status="rejected", table_path=rejected_table),
+        ]
+    ).write_jsonl(review_manifest)
+
+    export = CliRunner().invoke(
+        app,
+        [
+            "corpus",
+            "export",
+            str(review_manifest),
+            "--out-dir",
+            str(tmp_path / "exports"),
+        ],
+    )
+
+    assert export.exit_code == 0
+    assert '"exported_count": 1' in export.stdout
+    assert (tmp_path / "exports" / "accepted.csv").exists()

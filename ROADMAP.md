@@ -105,17 +105,21 @@ Status: complete.
 
 ## Phase 6: Batch Corpus Pipeline
 
-GitHub parent issue: TBD
+GitHub parent issue: #39
+
+Active branch: `feature/p6-batch-corpus-pipeline`
+
+Pull request: #45
 
 Goal: support large technical-document corpora on workstation hardware.
 
-- [ ] P6.1 Add pipeline config. Child issue: TBD.
-- [ ] P6.2 Add multiprocessing execution. Child issue: TBD.
-- [ ] P6.3 Add artifact layout. Child issue: TBD.
-- [ ] P6.4 Add failure recovery. Child issue: TBD.
-- [ ] P6.5 Add corpus CLI. Child issue: TBD.
+- [x] P6.1 Add pipeline config. Child issue: #40.
+- [x] P6.2 Add multiprocessing execution. Child issue: #41.
+- [x] P6.3 Add artifact layout. Child issue: #42.
+- [x] P6.4 Add failure recovery. Child issue: #43.
+- [x] P6.5 Add corpus CLI. Child issue: #44.
 
-Status: planned.
+Status: complete.
 
 ## Phase 7: FEMIC/FHOPS Integration Adapters
 

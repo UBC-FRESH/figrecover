@@ -14,6 +14,7 @@ from figrecover.models import (
     SeriesResult,
     SeriesSpec,
 )
+from figrecover.pipeline import CorpusRunConfig, RunManifest
 from figrecover.qa import FigureQualityMetrics, OverlayArtifact
 from figrecover.records import BoundingBox, FigureCandidate, RenderedPage, SourceDocument
 from figrecover.review import ReviewEntry, ReviewManifest
@@ -33,6 +34,8 @@ __all__ = [
     "RenderedPage",
     "ReviewEntry",
     "ReviewManifest",
+    "CorpusRunConfig",
+    "RunManifest",
     "SeriesResult",
     "SeriesSpec",
     "SourceDocument",
