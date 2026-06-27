@@ -77,6 +77,42 @@ This repo follows the UBC-FRESH phase/task/subtask workflow:
 - Open a PR from the phase branch to `main` only after phase tasks, tests, docs,
   and closeout notes are complete or explicitly deferred.
 
+## GitHub Issue And Comment Formatting
+
+Formatting matters. GitHub issue bodies and comments must be readable as
+rendered Markdown, not flattened prose.
+
+Rules:
+
+- Use short section labels on their own lines, such as `Roadmap task: P3.1`,
+  `Parent phase issue: #18`, `Status: active`, and `Checklist:`.
+- Use real GitHub task-list syntax, with one checklist item per line:
+
+  ```markdown
+  Checklist:
+  - [ ] Do the first thing.
+  - [ ] Do the second thing.
+  ```
+
+- Never write inline pseudo-checklists such as
+  `Checklist: [ ] first. [ ] second.`
+- Wrap branch names, file paths, commands, and commit hashes in backticks.
+- For parent phase issues, list child issues as task-list bullets with issue
+  numbers and task IDs.
+- For completion comments, prefer concise structured Markdown:
+
+  ```markdown
+  Completed in commit `abc1234`.
+
+  Verification:
+  - `python -m pytest`
+  - `python -m ruff check .`
+  ```
+
+- Before creating or editing several issues, prepare bodies as multi-line
+  Markdown strings or temporary body files. Do not pass long single-line bodies
+  to `gh issue create`, `gh issue edit`, or `gh issue comment`.
+
 ## Verification
 
 Default local checks:
