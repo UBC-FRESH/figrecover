@@ -16,3 +16,5 @@ This is the append-only project narrative for `figrecover`.
   and Phase 2 parent placeholders.
 - Created and synchronized Phase 1 child issues, closed Phase 1, and created
   Phase 2 task issues for the first implementation lane.
+- Added a local TFL 6 PDF prototype harness note and extended line extraction
+  settings to support top-edge recovery from filled area charts.

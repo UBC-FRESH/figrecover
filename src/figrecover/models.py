@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field, field_validator
 from figrecover.calibration import Calibration
 
 ExtractionMode = Literal["line", "scatter", "bar"]
+LineAggregation = Literal["median", "min", "max"]
 
 
 class Diagnostic(BaseModel):
@@ -28,6 +29,8 @@ class DataPoint(BaseModel):
 
 
 class SeriesSpec(BaseModel):
+    """Extraction settings for one visual series."""
+
     name: str
     color: str
     mode: ExtractionMode = "line"
@@ -35,6 +38,8 @@ class SeriesSpec(BaseModel):
     min_component_pixels: int = Field(default=4, ge=1)
     sample_every_px: int = Field(default=1, ge=1)
     bar_baseline: float | None = None
+    line_aggregation: LineAggregation = "median"
+    plot_edge_margin_px: int = Field(default=0, ge=0)
 
     @field_validator("color")
     @classmethod

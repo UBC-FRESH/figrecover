@@ -148,3 +148,41 @@ def test_multi_series_line_digitizer_keeps_series_separate(tmp_path: Path):
     assert set(frame["series"]) == {"diagonal", "flat"}
     flat = frame[frame["series"] == "flat"]
     assert flat["y"].median() == pytest.approx(50, abs=2)
+
+
+def test_line_digitizer_can_follow_top_edge_of_filled_area(tmp_path: Path):
+    image_path = tmp_path / "filled_area.png"
+    image = Image.new("RGB", (120, 120), "white")
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((10, 40, 110, 110), fill="#59fe01")
+    image.save(image_path)
+
+    calibration = Calibration.from_plot_bounds(
+        plot_left=10,
+        plot_right=110,
+        plot_top=10,
+        plot_bottom=110,
+        x_min=0,
+        x_max=100,
+        y_min=0,
+        y_max=100,
+    )
+    spec = DigitizeSpec(
+        calibration=calibration,
+        series=[
+            SeriesSpec(
+                name="area_top",
+                color="#59fe01",
+                mode="line",
+                tolerance=5,
+                line_aggregation="min",
+                plot_edge_margin_px=2,
+            )
+        ],
+    )
+
+    result = digitize_image(image_path, spec)
+    frame = result.to_dataframe()
+
+    assert len(frame) >= 95
+    assert frame["y"].median() == pytest.approx(70, abs=1)

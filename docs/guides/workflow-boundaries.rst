@@ -9,6 +9,8 @@ Current durable boundary:
 * users supply a cropped chart image;
 * users supply plot-frame pixel bounds and axis data bounds;
 * deterministic extractors recover coloured line, scatter, or bar series;
+* filled area charts can be treated as line extraction using the top or bottom
+  edge of a coloured region;
 * outputs include recovered values, pixel coordinates, confidence, and
   diagnostics.
 

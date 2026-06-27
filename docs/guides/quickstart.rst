@@ -21,6 +21,10 @@ Digitize a prepared image crop with known plot bounds:
      --x-min 0 --x-max 100 --y-min 0 --y-max 250 \
      --out harvest.csv
 
+For filled area charts, use the Python API and set
+``line_aggregation="min"`` to recover the top edge of the coloured area rather
+than the median coloured pixel in each x-column.
+
 Use the Python API when integrating into a larger system:
 
 .. code-block:: python
@@ -40,7 +44,14 @@ Use the Python API when integrating into a larger system:
            y_min=0,
            y_max=250,
        ),
-       series=[SeriesSpec(name="harvest", color="#1f77b4", mode="line")],
+       series=[
+           SeriesSpec(
+               name="harvest",
+               color="#1f77b4",
+               mode="line",
+               line_aggregation="median",
+           )
+       ],
    )
 
    result = digitize_image(Path("crop.png"), spec)

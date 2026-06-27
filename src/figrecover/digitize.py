@@ -17,8 +17,14 @@ def digitize_image(path: Path, spec: DigitizeSpec) -> DigitizeResult:
     for series_spec in spec.series:
         mask = color_mask(rgb, series_spec.color, tolerance=series_spec.tolerance)
         left, right, top, bottom = spec.calibration.clipped_bounds(width, height, margin=1)
+        inner_left = min(right, left + series_spec.plot_edge_margin_px)
+        inner_right = max(inner_left, right - series_spec.plot_edge_margin_px)
+        inner_top = min(bottom, top + series_spec.plot_edge_margin_px)
+        inner_bottom = max(inner_top, bottom - series_spec.plot_edge_margin_px)
         clipped_mask = np.zeros_like(mask, dtype=bool)
-        clipped_mask[top:bottom, left:right] = mask[top:bottom, left:right]
+        clipped_mask[inner_top:inner_bottom, inner_left:inner_right] = mask[
+            inner_top:inner_bottom, inner_left:inner_right
+        ]
 
         if series_spec.mode == "line":
             series_result = _extract_line(clipped_mask, spec, series_spec)
@@ -61,7 +67,12 @@ def _extract_line(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
         y_values = ys[xs == x_pixel]
         if y_values.size == 0:
             continue
-        y_pixel = float(np.median(y_values))
+        if series_spec.line_aggregation == "min":
+            y_pixel = float(np.min(y_values))
+        elif series_spec.line_aggregation == "max":
+            y_pixel = float(np.max(y_values))
+        else:
+            y_pixel = float(np.median(y_values))
         x_value, y_value = spec.calibration.pixel_to_data(float(x_pixel), y_pixel)
         confidence = min(1.0, max(0.2, y_values.size / 8.0))
         points.append(

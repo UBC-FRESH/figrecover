@@ -13,6 +13,7 @@ from figrecover.models import (
     Diagnostic,
     DigitizeResult,
     DigitizeSpec,
+    LineAggregation,
     SeriesResult,
     SeriesSpec,
 )
@@ -161,6 +162,7 @@ __all__ = [
     "ExtractionRun",
     "ExtractionToolchain",
     "FigureCandidate",
+    "LineAggregation",
     "RenderedPage",
     "SeriesResult",
     "SeriesSpec",
