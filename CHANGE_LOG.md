@@ -79,3 +79,6 @@ This is the append-only project narrative for `figrecover`.
 - Closed Phase 7 with public-safe integration boundaries, review-gated
   modelling exports, passing tests/docs/package checks, and Phase 8 public alpha
   inputs recorded.
+- Launched Phase 8 with GitHub parent and child issues for full public-alpha
+  docs, publication-safe examples, CI, release workflow, and `0.1.0a1`
+  publication.

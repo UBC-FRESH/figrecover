@@ -142,17 +142,19 @@ Pull request: #52.
 
 ## Phase 8: Documentation, Examples, And Public Alpha
 
-GitHub parent issue: TBD
+GitHub parent issue: #53
+
+Active branch: `feature/p8-docs-examples-public-alpha`
 
 Goal: make the package usable by external power users.
 
-- [ ] P8.1 Build full Sphinx docs. Child issue: TBD.
-- [ ] P8.2 Add examples. Child issue: TBD.
-- [ ] P8.3 Add CI and release checks. Child issue: TBD.
-- [ ] P8.4 Add release workflow. Child issue: TBD.
-- [ ] P8.5 Publish alpha. Child issue: TBD.
+- [ ] P8.1 Build full Sphinx docs. Child issue: #54.
+- [ ] P8.2 Add examples. Child issue: #55.
+- [ ] P8.3 Add CI and release checks. Child issue: #56.
+- [ ] P8.4 Add release workflow. Child issue: #57.
+- [ ] P8.5 Publish alpha. Child issue: #58.
 
-Status: planned.
+Status: active.
 
 ## Phase 9: Scholarly Publication And Peer Review
 
