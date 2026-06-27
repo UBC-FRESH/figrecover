@@ -1,0 +1,20 @@
+name: Roadmap task
+description: Track a figrecover phase task or implementation subtask.
+title: "P<phase>.<task> <short title>"
+labels: ["roadmap"]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent phase issue
+      description: Link the parent phase issue.
+      placeholder: "#123"
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Add subtask checklist items from ROADMAP.md.
+      value: |
+        - [ ] 
+    validations:
+      required: true

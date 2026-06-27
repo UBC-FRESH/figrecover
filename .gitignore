@@ -1,0 +1,16 @@
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.py[cod]
+.venv/
+_build/
+build/
+dist/
+*.egg-info/
+tmp/
+local/
+data/private/
+data/raw/
+outputs/
+*.pdf
+*.PDF

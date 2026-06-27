@@ -1,0 +1,109 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "figrecover"
+version = "0.1.0a0"
+description = "Recover approximate tabular data from scientific and professional figures."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "UBC FRESH Lab"}]
+keywords = [
+    "chart-digitization",
+    "data-recovery",
+    "pdf",
+    "scientific-computing",
+    "vision-language-models",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Text Processing :: Indexing",
+]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pillow>=10",
+    "pydantic>=2.6",
+    "rich>=13",
+    "typer>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/UBC-FRESH/figrecover"
+Documentation = "https://ubc-fresh.github.io/figrecover/"
+Repository = "https://github.com/UBC-FRESH/figrecover"
+Issues = "https://github.com/UBC-FRESH/figrecover/issues"
+Changelog = "https://github.com/UBC-FRESH/figrecover/blob/main/CHANGE_LOG.md"
+
+[project.optional-dependencies]
+cv = [
+    "scipy>=1.11",
+    "opencv-python-headless>=4.9",
+    "scikit-image>=0.22",
+]
+pdf = [
+    "pymupdf>=1.24",
+    "pypdf>=4",
+]
+vlm = [
+    "httpx>=0.27",
+]
+parsers = [
+    "docling>=2",
+]
+docs = [
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+]
+dev = [
+    "build>=1.2",
+    "matplotlib>=3.8",
+    "pytest>=8",
+    "ruff>=0.5",
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+    "twine>=5",
+]
+quality = [
+    "ruff>=0.5",
+]
+release = [
+    "build>=1.2",
+    "twine>=5",
+]
+test = [
+    "matplotlib>=3.8",
+    "pytest>=8",
+]
+
+[project.scripts]
+figrecover = "figrecover.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["src"]
+testpaths = ["tests"]
