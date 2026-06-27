@@ -17,8 +17,22 @@ def digitize_image(path: Path, spec: DigitizeSpec) -> DigitizeResult:
     for series_spec in spec.series:
         mask = color_mask(rgb, series_spec.color, tolerance=series_spec.tolerance)
         left, right, top, bottom = spec.calibration.clipped_bounds(width, height, margin=1)
+        series_diagnostics = _preflight_diagnostics(
+            mask=mask,
+            spec=spec,
+            series_spec=series_spec,
+            image_width=width,
+            image_height=height,
+            bounds=(left, right, top, bottom),
+        )
+        inner_left = min(right, left + series_spec.plot_edge_margin_px)
+        inner_right = max(inner_left, right - series_spec.plot_edge_margin_px)
+        inner_top = min(bottom, top + series_spec.plot_edge_margin_px)
+        inner_bottom = max(inner_top, bottom - series_spec.plot_edge_margin_px)
         clipped_mask = np.zeros_like(mask, dtype=bool)
-        clipped_mask[top:bottom, left:right] = mask[top:bottom, left:right]
+        clipped_mask[inner_top:inner_bottom, inner_left:inner_right] = mask[
+            inner_top:inner_bottom, inner_left:inner_right
+        ]
 
         if series_spec.mode == "line":
             series_result = _extract_line(clipped_mask, spec, series_spec)
@@ -27,7 +41,18 @@ def digitize_image(path: Path, spec: DigitizeSpec) -> DigitizeResult:
         elif series_spec.mode == "bar":
             series_result = _extract_bars(clipped_mask, spec, series_spec)
         else:
-            raise ValueError(f"Unsupported extraction mode: {series_spec.mode}")
+            series_result = SeriesResult(
+                spec=series_spec,
+                diagnostics=[
+                    Diagnostic(
+                        level="error",
+                        code="unsupported_chart_mode",
+                        message=f"Unsupported extraction mode: {series_spec.mode}.",
+                        context=_series_context(spec, series_spec),
+                    )
+                ],
+            )
+        series_result.diagnostics = series_diagnostics + series_result.diagnostics
         results.append(series_result)
 
     return DigitizeResult(
@@ -40,10 +65,82 @@ def digitize_image(path: Path, spec: DigitizeSpec) -> DigitizeResult:
     )
 
 
+def _series_context(spec: DigitizeSpec, series_spec) -> dict[str, object]:
+    return {
+        "image_id": spec.image_id,
+        "figure_label": spec.figure_label,
+        "source_pdf": str(spec.source_pdf) if spec.source_pdf is not None else None,
+        "source_page": spec.source_page,
+        "series": series_spec.name,
+        "mode": series_spec.mode,
+        "color": series_spec.color,
+    }
+
+
+def _preflight_diagnostics(
+    *,
+    mask: np.ndarray,
+    spec: DigitizeSpec,
+    series_spec,
+    image_width: int,
+    image_height: int,
+    bounds: tuple[int, int, int, int],
+) -> list[Diagnostic]:
+    diagnostics: list[Diagnostic] = []
+    context = _series_context(spec, series_spec)
+    context.update({"image_width": image_width, "image_height": image_height})
+
+    if None in (
+        spec.calibration.plot_left,
+        spec.calibration.plot_right,
+        spec.calibration.plot_top,
+        spec.calibration.plot_bottom,
+    ):
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="calibration_plot_bounds_missing",
+                message=(
+                    "Calibration does not include explicit plot-frame bounds; "
+                    "series extraction will use the full image."
+                ),
+                context=context,
+            )
+        )
+
+    raw_matched = int(np.count_nonzero(mask))
+    left, right, top, bottom = bounds
+    clipped_matched = int(np.count_nonzero(mask[top:bottom, left:right]))
+    outside_matched = raw_matched - clipped_matched
+    if outside_matched > 0:
+        clipped_context = dict(context)
+        clipped_context.update(
+            {
+                "matched_pixels": raw_matched,
+                "inside_plot_pixels": clipped_matched,
+                "outside_plot_pixels": outside_matched,
+                "plot_bounds_px": [left, right, top, bottom],
+            }
+        )
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="matched_pixels_clipped_to_plot",
+                message=(
+                    f"{outside_matched} matched pixels for series {series_spec.name} "
+                    "fell outside the calibrated plot frame and were ignored."
+                ),
+                context=clipped_context,
+            )
+        )
+    return diagnostics
+
+
 def _extract_line(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesResult:
     ys, xs = np.nonzero(mask)
     diagnostics: list[Diagnostic] = []
     points: list[DataPoint] = []
+    context = _series_context(spec, series_spec)
     if xs.size == 0:
         diagnostics.append(
             Diagnostic(
@@ -53,6 +150,7 @@ def _extract_line(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
                     f"No pixels matched colour {series_spec.color} "
                     f"for series {series_spec.name}."
                 ),
+                context=context,
             )
         )
         return SeriesResult(spec=series_spec, diagnostics=diagnostics)
@@ -61,7 +159,12 @@ def _extract_line(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
         y_values = ys[xs == x_pixel]
         if y_values.size == 0:
             continue
-        y_pixel = float(np.median(y_values))
+        if series_spec.line_aggregation == "min":
+            y_pixel = float(np.min(y_values))
+        elif series_spec.line_aggregation == "max":
+            y_pixel = float(np.max(y_values))
+        else:
+            y_pixel = float(np.median(y_values))
         x_value, y_value = spec.calibration.pixel_to_data(float(x_pixel), y_pixel)
         confidence = min(1.0, max(0.2, y_values.size / 8.0))
         points.append(
@@ -75,12 +178,35 @@ def _extract_line(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
             )
         )
 
+    expected_samples = ((int(xs.max()) - int(xs.min())) // series_spec.sample_every_px) + 1
+    coverage = len(points) / expected_samples if expected_samples else 0.0
+    if coverage < 0.5:
+        low_context = dict(context)
+        low_context.update(
+            {
+                "samples": len(points),
+                "expected_samples": expected_samples,
+                "coverage": coverage,
+            }
+        )
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="low_confidence_extraction",
+                message=(
+                    f"Line extraction for {series_spec.name} covered only "
+                    f"{coverage:.1%} of expected x samples."
+                ),
+                context=low_context,
+            )
+        )
+
     diagnostics.append(
         Diagnostic(
             level="info",
             code="line_extracted",
             message=f"Extracted {len(points)} line samples for {series_spec.name}.",
-            context={"matched_pixels": int(xs.size)},
+            context={"matched_pixels": int(xs.size), **context},
         )
     )
     return SeriesResult(spec=series_spec, points=points, diagnostics=diagnostics)
@@ -90,9 +216,12 @@ def _extract_scatter(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> Serie
     components = _connected_components(mask)
     diagnostics: list[Diagnostic] = []
     points: list[DataPoint] = []
+    context = _series_context(spec, series_spec)
 
+    filtered_components = 0
     for component in components:
         if len(component) < series_spec.min_component_pixels:
+            filtered_components += 1
             continue
         y_pixels = np.array([p[0] for p in component], dtype=float)
         x_pixels = np.array([p[1] for p in component], dtype=float)
@@ -111,12 +240,46 @@ def _extract_scatter(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> Serie
         )
 
     points.sort(key=lambda point: (point.x, point.y))
+    if components and filtered_components > len(points):
+        ambiguous_context = dict(context)
+        ambiguous_context.update(
+            {
+                "components": len(components),
+                "kept_components": len(points),
+                "filtered_components": filtered_components,
+                "min_component_pixels": series_spec.min_component_pixels,
+            }
+        )
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="ambiguous_components_filtered",
+                message=(
+                    f"Scatter extraction for {series_spec.name} filtered "
+                    f"{filtered_components} small components."
+                ),
+                context=ambiguous_context,
+            )
+        )
+    if not points:
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="low_confidence_extraction",
+                message=f"Scatter extraction for {series_spec.name} produced no points.",
+                context=context,
+            )
+        )
     diagnostics.append(
         Diagnostic(
             level="info",
             code="scatter_extracted",
             message=f"Extracted {len(points)} scatter components for {series_spec.name}.",
-            context={"components": len(components)},
+            context={
+                "components": len(components),
+                "filtered_components": filtered_components,
+                **context,
+            },
         )
     )
     return SeriesResult(spec=series_spec, points=points, diagnostics=diagnostics)
@@ -126,6 +289,7 @@ def _extract_bars(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
     ys, xs = np.nonzero(mask)
     diagnostics: list[Diagnostic] = []
     points: list[DataPoint] = []
+    context = _series_context(spec, series_spec)
     if xs.size == 0:
         diagnostics.append(
             Diagnostic(
@@ -135,6 +299,7 @@ def _extract_bars(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
                     f"No pixels matched colour {series_spec.color} "
                     f"for series {series_spec.name}."
                 ),
+                context=context,
             )
         )
         return SeriesResult(spec=series_spec, diagnostics=diagnostics)
@@ -147,10 +312,12 @@ def _extract_bars(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
         else spec.calibration.y.pixel_max
     )
 
+    filtered_runs = 0
     for start, end in runs:
         run_mask = (xs >= start) & (xs <= end)
         y_values = ys[run_mask]
         if y_values.size < series_spec.min_component_pixels:
+            filtered_runs += 1
             continue
         top_pixel = float(np.min(y_values))
         bottom_pixel = float(np.max(y_values))
@@ -168,12 +335,47 @@ def _extract_bars(mask: np.ndarray, spec: DigitizeSpec, series_spec) -> SeriesRe
             )
         )
 
+    if filtered_runs:
+        ambiguous_context = dict(context)
+        ambiguous_context.update(
+            {
+                "runs": len(runs),
+                "kept_runs": len(points),
+                "filtered_runs": filtered_runs,
+                "min_component_pixels": series_spec.min_component_pixels,
+            }
+        )
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="ambiguous_components_filtered",
+                message=(
+                    f"Bar extraction for {series_spec.name} "
+                    f"filtered {filtered_runs} small runs."
+                ),
+                context=ambiguous_context,
+            )
+        )
+    if not points:
+        diagnostics.append(
+            Diagnostic(
+                level="warning",
+                code="low_confidence_extraction",
+                message=f"Bar extraction for {series_spec.name} produced no bars.",
+                context=context,
+            )
+        )
     diagnostics.append(
         Diagnostic(
             level="info",
             code="bars_extracted",
             message=f"Extracted {len(points)} bars for {series_spec.name}.",
-            context={"runs": len(runs), "matched_pixels": int(xs.size)},
+            context={
+                "runs": len(runs),
+                "filtered_runs": filtered_runs,
+                "matched_pixels": int(xs.size),
+                **context,
+            },
         )
     )
     return SeriesResult(spec=series_spec, points=points, diagnostics=diagnostics)

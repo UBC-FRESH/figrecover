@@ -17,6 +17,14 @@ Digitization Models
 .. automodule:: figrecover.models
    :members:
 
+Extraction diagnostics are structured records with a severity level, stable
+code, human-readable message, and context dictionary. Downstream workflows
+should use diagnostic codes rather than parsing messages.
+
+``DigitizeResult.to_dataframe(include_provenance=True)`` returns a long table
+with document, figure, crop, and extraction-tool metadata suitable for
+combining recovered points from many figures.
+
 Workflow Records
 ----------------
 

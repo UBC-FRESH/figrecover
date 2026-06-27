@@ -16,3 +16,11 @@ This is the append-only project narrative for `figrecover`.
   and Phase 2 parent placeholders.
 - Created and synchronized Phase 1 child issues, closed Phase 1, and created
   Phase 2 task issues for the first implementation lane.
+- Added a local TFL 6 PDF prototype harness note and extended line extraction
+  settings to support top-edge recovery from filled area charts.
+- Added structured extraction diagnostics for clipped matches, sparse results,
+  filtered components/runs, no-match cases, and missing plot bounds.
+- Added source/crop/toolchain provenance fields to image-level digitization
+  records and optional provenance columns for recovered-point exports.
+- Closed the Phase 2 implementation slice locally with calibrated image-crop
+  records, extraction, diagnostics, tests, docs, and Phase 3 inputs.

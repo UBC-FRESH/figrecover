@@ -9,8 +9,27 @@ Current durable boundary:
 * users supply a cropped chart image;
 * users supply plot-frame pixel bounds and axis data bounds;
 * deterministic extractors recover coloured line, scatter, or bar series;
+* filled area charts can be treated as line extraction using the top or bottom
+  edge of a coloured region;
 * outputs include recovered values, pixel coordinates, confidence, and
   diagnostics.
+
+Digitization records can carry source provenance, including image ID, document
+ID, figure ID, figure label, source PDF, source page, crop bounding box,
+extraction tool, tool version, and extractor settings. CSV exports can include
+these provenance fields when combining results across documents.
+
+Current diagnostic codes include:
+
+* ``no_pixels_matched`` when a series colour is not found;
+* ``matched_pixels_clipped_to_plot`` when matching pixels fall outside the
+  calibrated plot frame;
+* ``low_confidence_extraction`` when an extractor produces sparse or empty
+  results;
+* ``ambiguous_components_filtered`` when small scatter components or bar runs
+  are filtered;
+* ``calibration_plot_bounds_missing`` when extraction falls back to the full
+  image because no plot-frame bounds were supplied.
 
 Planned optional layers:
 
