@@ -24,3 +24,6 @@ This is the append-only project narrative for `figrecover`.
   records and optional provenance columns for recovered-point exports.
 - Closed the Phase 2 implementation slice locally with calibrated image-crop
   records, extraction, diagnostics, tests, docs, and Phase 3 inputs.
+- Launched Phase 3 with GitHub parent and child issues for PDF rendering,
+  figure manifests, optional parser adapters, CLI commands, and synthetic PDF
+  tests.
