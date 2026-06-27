@@ -192,6 +192,27 @@ class VLMParsedResponse(BaseModel):
     diagnostics: list[Diagnostic] = Field(default_factory=list)
 
 
+class EnsembleFieldSummary(BaseModel):
+    """Agreement summary for one VLM-proposed metadata field."""
+
+    field: str
+    winner: str | None = None
+    counts: dict[str, int] = Field(default_factory=dict)
+    agreement: float = Field(default=0.0, ge=0.0, le=1.0)
+    mean_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    needs_review: bool = True
+
+
+class VLMEnsembleSummary(BaseModel):
+    """Summary of repeated VLM metadata proposal agreement."""
+
+    input_count: int = Field(ge=0)
+    valid_proposal_count: int = Field(ge=0)
+    fields: list[EnsembleFieldSummary] = Field(default_factory=list)
+    diagnostics: list[Diagnostic] = Field(default_factory=list)
+    proposal_request_ids: list[str] = Field(default_factory=list)
+
+
 class VLMBackend(Protocol):
     """Protocol for local chart-understanding VLM backends."""
 
@@ -522,6 +543,126 @@ def _extract_json_object_text(response_text: str) -> tuple[str, list[Diagnostic]
     return text, diagnostics
 
 
+def summarize_chart_metadata_ensemble(
+    results: list[ChartTriageResult],
+    *,
+    min_agreement: float = 0.67,
+) -> VLMEnsembleSummary:
+    """Summarize agreement across repeated chart metadata proposals."""
+
+    proposals = [result.proposal for result in results if result.proposal is not None]
+    request_ids = [result.request.request_id for result in results]
+    diagnostics: list[Diagnostic] = []
+    if not proposals:
+        diagnostics.append(
+            Diagnostic(
+                level="error",
+                code="vlm_ensemble_no_proposals",
+                message="No valid VLM proposals were available for ensemble summarization.",
+            )
+        )
+        return VLMEnsembleSummary(
+            input_count=len(results),
+            valid_proposal_count=0,
+            diagnostics=diagnostics,
+            proposal_request_ids=request_ids,
+        )
+
+    fields = [
+        _summarize_field(
+            "chart_type",
+            [(proposal.chart_type, proposal.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+        _summarize_field(
+            "title",
+            [(proposal.title, proposal.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+        _summarize_field(
+            "x_axis.label",
+            [(proposal.x_axis.label, proposal.x_axis.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+        _summarize_field(
+            "y_axis.label",
+            [(proposal.y_axis.label, proposal.y_axis.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+        _summarize_field(
+            "x_axis.scale",
+            [(proposal.x_axis.scale, proposal.x_axis.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+        _summarize_field(
+            "y_axis.scale",
+            [(proposal.y_axis.scale, proposal.y_axis.confidence) for proposal in proposals],
+            min_agreement=min_agreement,
+        ),
+    ]
+    for field in fields:
+        if field.needs_review:
+            diagnostics.append(
+                Diagnostic(
+                    level="warning",
+                    code="vlm_ensemble_disagreement",
+                    message="Repeated VLM proposals disagree on a metadata field.",
+                    context={
+                        "field": field.field,
+                        "counts": field.counts,
+                        "agreement": field.agreement,
+                    },
+                )
+            )
+    return VLMEnsembleSummary(
+        input_count=len(results),
+        valid_proposal_count=len(proposals),
+        fields=fields,
+        diagnostics=diagnostics,
+        proposal_request_ids=request_ids,
+    )
+
+
+def _summarize_field(
+    field: str,
+    values: list[tuple[object, float]],
+    *,
+    min_agreement: float,
+) -> EnsembleFieldSummary:
+    normalized = [_normalize_ensemble_value(value) for value, _ in values]
+    counts: dict[str, int] = {}
+    for value in normalized:
+        counts[value] = counts.get(value, 0) + 1
+    top_count = max(counts.values()) if counts else 0
+    winners = [value for value, count in counts.items() if count == top_count]
+    winner = winners[0] if len(winners) == 1 and winner_is_informative(winners[0]) else None
+    agreement = top_count / len(values) if values else 0.0
+    mean_confidence = sum(confidence for _, confidence in values) / len(values) if values else 0.0
+    all_missing = len(counts) == 1 and "<missing>" in counts
+    needs_review = False if all_missing else winner is None or agreement < min_agreement
+    return EnsembleFieldSummary(
+        field=field,
+        winner=winner,
+        counts=counts,
+        agreement=agreement,
+        mean_confidence=mean_confidence,
+        needs_review=needs_review,
+    )
+
+
+def _normalize_ensemble_value(value: object) -> str:
+    if value is None:
+        return "<missing>"
+    text = str(value).strip()
+    return text if text else "<missing>"
+
+
+def winner_is_informative(value: str) -> bool:
+    """Return whether an ensemble winner carries information."""
+
+    return value != "<missing>"
+
+
 def _dict_or_empty(value: object) -> dict[str, object]:
     return value if isinstance(value, dict) else {}
 
@@ -544,6 +685,7 @@ __all__ = [
     "ChartMetadataProposal",
     "ChartTriageRequest",
     "ChartTriageResult",
+    "EnsembleFieldSummary",
     "HttpxJSONTransport",
     "JSONTransport",
     "LegendProposal",
@@ -553,6 +695,7 @@ __all__ = [
     "TickLabelProposal",
     "VLMBackend",
     "VLMBackendInfo",
+    "VLMEnsembleSummary",
     "VLMParsedResponse",
     "VLMPromptRecord",
     "VLMPromptTemplate",
@@ -561,4 +704,5 @@ __all__ = [
     "default_chart_metadata_prompt",
     "parse_chart_metadata_response",
     "parse_json_object_response",
+    "summarize_chart_metadata_ensemble",
 ]

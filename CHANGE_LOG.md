@@ -48,3 +48,6 @@ This is the append-only project narrative for `figrecover`.
 - Added versioned structured VLM prompt templates and JSON response parsing
   helpers with diagnostics for markdown fences, surrounding response text,
   invalid JSON, non-object JSON, and schema validation failures.
+- Added conservative VLM self-ensemble utilities that summarize repeated
+  metadata proposal agreement, flag disagreements, preserve request IDs, and
+  avoid numeric data-table averaging.

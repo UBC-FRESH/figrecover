@@ -21,6 +21,7 @@ from figrecover.vlm import (
     VLMRawResponse,
     parse_chart_metadata_response,
     parse_json_object_response,
+    summarize_chart_metadata_ensemble,
 )
 
 
@@ -263,3 +264,66 @@ def test_parse_chart_metadata_response_reports_schema_errors():
     assert parsed.parsed_json is not None
     assert parsed.proposal is None
     assert parsed.diagnostics[0].code == "vlm_validation_error"
+
+
+def test_summarize_chart_metadata_ensemble_reports_agreement():
+    results = [
+        ChartTriageResult(
+            request=ChartTriageRequest(request_id=f"run-{index}", image_path=Path("crop.png")),
+            proposal=ChartMetadataProposal(
+                chart_type="line",
+                title="Harvest forecast",
+                confidence=0.8,
+            ),
+        )
+        for index in range(3)
+    ]
+
+    summary = summarize_chart_metadata_ensemble(results)
+
+    chart_type = next(field for field in summary.fields if field.field == "chart_type")
+    assert summary.valid_proposal_count == 3
+    assert chart_type.winner == "line"
+    assert chart_type.agreement == 1.0
+    assert chart_type.needs_review is False
+    assert summary.diagnostics == []
+
+
+def test_summarize_chart_metadata_ensemble_flags_disagreement():
+    results = [
+        ChartTriageResult(
+            request=ChartTriageRequest(request_id="run-1", image_path=Path("crop.png")),
+            proposal=ChartMetadataProposal(chart_type="line", confidence=0.8),
+        ),
+        ChartTriageResult(
+            request=ChartTriageRequest(request_id="run-2", image_path=Path("crop.png")),
+            proposal=ChartMetadataProposal(chart_type="bar", confidence=0.7),
+        ),
+    ]
+
+    summary = summarize_chart_metadata_ensemble(results)
+
+    chart_type = next(field for field in summary.fields if field.field == "chart_type")
+    assert chart_type.winner is None
+    assert chart_type.needs_review is True
+    assert any(diagnostic.code == "vlm_ensemble_disagreement" for diagnostic in summary.diagnostics)
+
+
+def test_summarize_chart_metadata_ensemble_handles_no_valid_proposals():
+    summary = summarize_chart_metadata_ensemble(
+        [
+            ChartTriageResult(
+                request=ChartTriageRequest(request_id="run-1", image_path=Path("crop.png")),
+                diagnostics=[
+                    Diagnostic(
+                        level="warning",
+                        code="vlm_invalid_json",
+                        message="Invalid JSON.",
+                    )
+                ],
+            )
+        ]
+    )
+
+    assert summary.valid_proposal_count == 0
+    assert summary.diagnostics[0].code == "vlm_ensemble_no_proposals"
