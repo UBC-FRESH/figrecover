@@ -70,18 +70,20 @@ Status: complete.
 
 ## Phase 4: Local VLM Assistance Layer
 
-GitHub parent issue: TBD
+GitHub parent issue: #25
+
+Active branch: `feature/p4-local-vlm-assistance-layer`
 
 Goal: use local open VLMs for chart understanding while keeping numeric
 extraction auditable.
 
-- [ ] P4.1 Define VLM boundary. Child issue: TBD.
-- [ ] P4.2 Add local backend interface. Child issue: TBD.
-- [ ] P4.3 Add structured prompt templates. Child issue: TBD.
-- [ ] P4.4 Add self-ensemble utilities. Child issue: TBD.
-- [ ] P4.5 Add GPU/system docs. Child issue: TBD.
+- [ ] P4.1 Define VLM boundary. Child issue: #26.
+- [ ] P4.2 Add local backend interface. Child issue: #27.
+- [ ] P4.3 Add structured prompt templates. Child issue: #28.
+- [ ] P4.4 Add self-ensemble utilities. Child issue: #29.
+- [ ] P4.5 Add GPU/system docs. Child issue: #30.
 
-Status: planned.
+Status: active.
 
 ## Phase 5: QA, Review, And Human-In-The-Loop Workflows
 

@@ -36,3 +36,6 @@ This is the append-only project narrative for `figrecover`.
   Phase 4 VLM assistance inputs.
 - Added planned Phase 9 for pyOpenSci package peer review and JOSS companion
   paper publication once `figrecover` is v1.0.0 release-ready.
+- Launched Phase 4 with GitHub parent and child issues for the local VLM
+  assistance layer, including proposal records, local backend interface,
+  structured prompts, self-ensemble utilities, and GPU/system docs.
