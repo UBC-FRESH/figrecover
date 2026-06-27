@@ -77,6 +77,86 @@ This repo follows the UBC-FRESH phase/task/subtask workflow:
 - Open a PR from the phase branch to `main` only after phase tasks, tests, docs,
   and closeout notes are complete or explicitly deferred.
 
+## GitHub Issue And Comment Formatting
+
+Formatting matters. GitHub issue bodies and comments must be readable as
+rendered Markdown, not flattened prose.
+
+Rules:
+
+- Use short section labels on their own lines, such as `Roadmap task: P3.1`,
+  `Parent phase issue: #18`, `Status: active`, and `Checklist:`.
+- Use real GitHub task-list syntax, with one checklist item per line:
+
+  ```markdown
+  Checklist:
+  - [ ] Do the first thing.
+  - [ ] Do the second thing.
+  ```
+
+- Never write inline pseudo-checklists such as
+  `Checklist: [ ] first. [ ] second.`
+- Wrap branch names, file paths, commands, and commit hashes in backticks.
+- For parent phase issues, list child issues as task-list bullets with issue
+  numbers and task IDs.
+- For completion comments, prefer concise structured Markdown:
+
+  ```markdown
+  Completed in commit `abc1234`.
+
+  Verification:
+  - `python -m pytest`
+  - `python -m ruff check .`
+  ```
+
+- Before creating or editing several issues, prepare bodies as multi-line
+  Markdown strings or temporary body files. Do not pass long single-line bodies
+  to `gh issue create`, `gh issue edit`, or `gh issue comment`.
+
+## GitHub Issue Body Quality Standard
+
+Issue bodies are part of the project specification and onboarding material.
+Write them so a new lab student, external collaborator, or coding agent can
+understand the task, implement it, verify it, and close it without reading the
+original chat transcript.
+
+Parent phase issues must include:
+
+- Phase identifier, status, branch name, and roadmap/planning links.
+- A short goal statement describing the capability the phase adds.
+- Scope and out-of-scope sections that set implementation boundaries.
+- Architecture or workflow notes that explain how the phase fits the package.
+- A child issue checklist with task IDs and issue numbers.
+- Phase-level acceptance criteria.
+- Verification and closeout requirements, including docs, tests, roadmap,
+  changelog, issue updates, PR, and private-data hygiene.
+- Completion metadata once closed, including commits and merged PRs when
+  applicable.
+
+Child task issues must include:
+
+- Task identifier, parent phase issue, status, and related planning links.
+- Goal and rationale: what user-facing or developer-facing capability this
+  task provides and why it matters.
+- Scope: concrete behaviours, APIs, files, CLI commands, records, docs, or
+  tests expected from the task.
+- Out of scope: adjacent work that should not be pulled into the task.
+- Implementation notes: expected modules, public API names, dependency policy,
+  compatibility constraints, provenance rules, and repo patterns to follow.
+- Subtasks as real GitHub task-list items. Each item should be specific enough
+  to review and check off independently.
+- Acceptance criteria written as observable outcomes, not vague intentions.
+- Verification commands and any local/manual checks expected before closing.
+- Artifacts and documentation updates expected from the task.
+- Risks, edge cases, and deferred follow-up work where relevant.
+- Completion metadata once closed, including commit hashes, merged PRs, and
+  intentionally deferred items.
+
+Do not create placeholder issue bodies with only a title and a short checklist
+unless the maintainer explicitly asks for a placeholder. If a placeholder is
+unavoidable, label it clearly as a placeholder and replace it with a complete
+body before implementation begins.
+
 ## Verification
 
 Default local checks:

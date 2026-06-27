@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from figrecover.calibration import AxisCalibration, Calibration, CalibrationProposal
 from figrecover.models import (
@@ -46,6 +46,7 @@ class RenderedPage(BaseModel):
     document_id: str
     page_number: int = Field(ge=1)
     image_path: Path
+    source_pdf: Path | None = None
     width_px: int = Field(ge=1)
     height_px: int = Field(ge=1)
     dpi: int = Field(ge=1)
@@ -73,6 +74,14 @@ class BoundingBox(BaseModel):
 
         return self.bottom - self.top
 
+    @model_validator(mode="after")
+    def _validate_order(self) -> BoundingBox:
+        if self.right <= self.left:
+            raise ValueError("bbox right must be greater than left")
+        if self.bottom <= self.top:
+            raise ValueError("bbox bottom must be greater than top")
+        return self
+
 
 class FigureCandidate(BaseModel):
     """Candidate figure crop and provenance."""
@@ -81,12 +90,21 @@ class FigureCandidate(BaseModel):
     document_id: str | None = None
     page_number: int | None = Field(default=None, ge=1)
     image_path: Path
+    source_image_path: Path | None = None
     bbox: BoundingBox | None = None
     label: str | None = None
     caption: str | None = None
     source: str = "manual"
     confidence: float = Field(default=1.0, ge=0.0, le=1.0)
     metadata: dict[str, object] = Field(default_factory=dict)
+
+    @field_validator("figure_id")
+    @classmethod
+    def _validate_figure_id(cls, value: str) -> str:
+        text = value.strip()
+        if not text:
+            raise ValueError("figure_id must not be empty")
+        return text
 
 
 class AxisMetadata(BaseModel):
