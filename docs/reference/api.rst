@@ -47,6 +47,12 @@ Parser Adapters
 .. automodule:: figrecover.adapters
    :members:
 
+VLM Proposals
+-------------
+
+.. automodule:: figrecover.vlm
+   :members:
+
 Digitization
 ------------
 

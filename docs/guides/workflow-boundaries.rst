@@ -63,4 +63,6 @@ Planned optional layers:
 * FEMIC/FHOPS export adapters.
 
 VLM outputs are proposals. They should help reduce manual work, but calibrated
-geometry remains the preferred numeric source whenever it is feasible.
+geometry remains the preferred numeric source whenever it is feasible. VLM
+records preserve prompt, backend, model, raw response, parsed proposal, and
+diagnostic metadata so downstream review can audit how a proposal was produced.

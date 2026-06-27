@@ -39,3 +39,6 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 4 with GitHub parent and child issues for the local VLM
   assistance layer, including proposal records, local backend interface,
   structured prompts, self-ensemble utilities, and GPU/system docs.
+- Added VLM proposal records for chart triage requests/results, metadata
+  proposals, legend/tick/series-colour proposals, calibration hints, prompt
+  provenance, raw responses, and validation diagnostics.
