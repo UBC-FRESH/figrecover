@@ -28,6 +28,7 @@ chooses an experimental VLM-only path.
    guides/integrations
    guides/examples
    guides/development-checks
+   guides/release-process
    guides/limitations
 
 .. toctree::

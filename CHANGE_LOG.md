@@ -90,3 +90,5 @@ This is the append-only project narrative for `figrecover`.
   and smoke-test coverage.
 - Added public CI for Ruff, pytest, Sphinx, package build, and Twine metadata
   checks across Python 3.11 and 3.12, plus development-check documentation.
+- Added a manually triggered, environment-gated release workflow and release
+  process documentation for TestPyPI/PyPI alpha publishing.
