@@ -109,7 +109,7 @@ GitHub parent issue: #39
 
 Active branch: `feature/p6-batch-corpus-pipeline`
 
-Pull request: TBD
+Pull request: #45
 
 Goal: support large technical-document corpora on workstation hardware.
 
