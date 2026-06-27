@@ -40,6 +40,8 @@ GitHub parent issue: #7
 
 Active branch: `feature/p2-core-records-calibration-extraction-api`
 
+Pull request: #17
+
 Goal: build the durable Python API for calibrated image-level extraction.
 
 - [x] P2.1 Stabilize record model. Child issue: #14.
@@ -48,7 +50,7 @@ Goal: build the durable Python API for calibrated image-level extraction.
 - [x] P2.4 Add focused synthetic tests. Child issue: #15.
 - [x] P2.5 Add API docstrings and first Sphinx reference pages. Child issue: #16.
 
-Status: ready for PR.
+Status: complete.
 
 ## Phase 3: Document Ingestion And Figure Cropping
 
