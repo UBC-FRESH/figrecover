@@ -79,7 +79,7 @@ extraction auditable.
 
 - [x] P4.1 Define VLM boundary. Child issue: #26.
 - [x] P4.2 Add local backend interface. Child issue: #27.
-- [ ] P4.3 Add structured prompt templates. Child issue: #28.
+- [x] P4.3 Add structured prompt templates. Child issue: #28.
 - [ ] P4.4 Add self-ensemble utilities. Child issue: #29.
 - [ ] P4.5 Add GPU/system docs. Child issue: #30.
 

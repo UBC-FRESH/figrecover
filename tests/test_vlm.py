@@ -5,6 +5,7 @@ import pytest
 from figrecover.models import Diagnostic
 from figrecover.records import BoundingBox, FigureCandidate
 from figrecover.vlm import (
+    CHART_METADATA_PROMPT_TEMPLATE,
     AxisRangeProposal,
     CalibrationHintProposal,
     ChartMetadataProposal,
@@ -18,6 +19,8 @@ from figrecover.vlm import (
     VLMBackendInfo,
     VLMPromptRecord,
     VLMRawResponse,
+    parse_chart_metadata_response,
+    parse_json_object_response,
 )
 
 
@@ -217,3 +220,46 @@ def test_openai_compatible_backend_records_backend_errors(tmp_path: Path):
     assert result.proposal is None
     assert result.raw_response is None
     assert result.diagnostics[0].code == "vlm_backend_error"
+
+
+def test_prompt_template_renders_versioned_prompt_records():
+    prompt = CHART_METADATA_PROMPT_TEMPLATE.render({"context": "caption text"})
+
+    assert prompt.task == "chart_metadata"
+    assert prompt.template_id == "chart-metadata-json"
+    assert prompt.template_version == "0.1"
+    assert "caption text" in prompt.text
+    assert prompt.variables["context"] == "caption text"
+
+
+def test_prompt_template_requires_declared_variables():
+    with pytest.raises(ValueError, match="missing prompt variables: context"):
+        CHART_METADATA_PROMPT_TEMPLATE.render({})
+
+
+def test_parse_json_object_response_removes_markdown_fences():
+    parsed, diagnostics = parse_json_object_response(
+        '```json\n{"chart_type": "bar", "confidence": 0.5}\n```'
+    )
+
+    assert parsed == {"chart_type": "bar", "confidence": 0.5}
+    assert diagnostics[0].code == "vlm_json_markdown_fence_removed"
+
+
+def test_parse_json_object_response_extracts_json_from_surrounding_text():
+    parsed, diagnostics = parse_json_object_response(
+        'Here is the JSON: {"chart_type": "scatter", "confidence": 0.4}'
+    )
+
+    assert parsed == {"chart_type": "scatter", "confidence": 0.4}
+    assert diagnostics[0].code == "vlm_json_object_extracted"
+
+
+def test_parse_chart_metadata_response_reports_schema_errors():
+    parsed = parse_chart_metadata_response(
+        '{"chart_type": "line", "series_colors": [{"color": "blue"}]}'
+    )
+
+    assert parsed.parsed_json is not None
+    assert parsed.proposal is None
+    assert parsed.diagnostics[0].code == "vlm_validation_error"

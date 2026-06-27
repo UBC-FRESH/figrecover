@@ -41,6 +41,32 @@ class VLMPromptRecord(BaseModel):
     variables: dict[str, object] = Field(default_factory=dict)
 
 
+class VLMPromptTemplate(BaseModel):
+    """Versioned prompt template for structured VLM proposal requests."""
+
+    task: VLMTask
+    template_id: str
+    template_version: str
+    text: str
+    required_variables: list[str] = Field(default_factory=list)
+
+    def render(self, variables: dict[str, object] | None = None) -> VLMPromptRecord:
+        """Render the template into a prompt record."""
+
+        values = variables or {}
+        missing = [name for name in self.required_variables if name not in values]
+        if missing:
+            raise ValueError(f"missing prompt variables: {', '.join(missing)}")
+        text = self.text.format(**values)
+        return VLMPromptRecord(
+            task=self.task,
+            template_id=self.template_id,
+            template_version=self.template_version,
+            text=text,
+            variables=values,
+        )
+
+
 class VLMRawResponse(BaseModel):
     """Raw VLM response and backend metadata preserved for audit."""
 
@@ -155,6 +181,14 @@ class ChartTriageResult(BaseModel):
     request: ChartTriageRequest
     proposal: ChartMetadataProposal | None = None
     raw_response: VLMRawResponse | None = None
+    diagnostics: list[Diagnostic] = Field(default_factory=list)
+
+
+class VLMParsedResponse(BaseModel):
+    """Parsed structured response and diagnostics from a VLM output string."""
+
+    parsed_json: dict[str, object] | None = None
+    proposal: ChartMetadataProposal | None = None
     diagnostics: list[Diagnostic] = Field(default_factory=list)
 
 
@@ -281,26 +315,13 @@ class OpenAICompatibleVLMBackend:
             )
 
         response_text = _extract_openai_message_text(response)
-        parsed_json, diagnostics = _parse_chart_metadata_json(response_text)
-        proposal = None
-        if isinstance(parsed_json, dict):
-            try:
-                proposal = ChartMetadataProposal.model_validate(parsed_json)
-            except ValidationError as exc:
-                diagnostics.append(
-                    Diagnostic(
-                        level="warning",
-                        code="vlm_validation_error",
-                        message="The VLM response JSON did not match the chart proposal schema.",
-                        context={"errors": exc.errors()},
-                    )
-                )
+        parsed = parse_chart_metadata_response(response_text)
 
         raw_response = VLMRawResponse(
             backend=self.config.backend_info(),
             prompt=prompt,
             response_text=response_text,
-            parsed_json=parsed_json,
+            parsed_json=parsed.parsed_json,
             usage=_dict_or_empty(response.get("usage")),
             metadata={
                 "response_id": response.get("id"),
@@ -309,9 +330,9 @@ class OpenAICompatibleVLMBackend:
         )
         return ChartTriageResult(
             request=request_with_prompt,
-            proposal=proposal,
+            proposal=parsed.proposal,
             raw_response=raw_response,
-            diagnostics=diagnostics,
+            diagnostics=parsed.diagnostics,
         )
 
     def _headers(self) -> dict[str, str]:
@@ -347,17 +368,49 @@ class OpenAICompatibleVLMBackend:
 def default_chart_metadata_prompt() -> VLMPromptRecord:
     """Return a minimal default prompt for local backend smoke tests."""
 
-    return VLMPromptRecord(
-        task="chart_metadata",
-        template_id="chart-metadata-json",
-        template_version="0.1",
-        text=(
-            "Return JSON describing this chart as proposals only. Include "
-            "chart_type, title, x_axis, y_axis, legend, series_colors, "
-            "warnings, and confidence when visible. Do not infer a numeric "
-            "data table."
-        ),
-    )
+    return CHART_METADATA_PROMPT_TEMPLATE.render({"context": ""})
+
+
+CHART_TRIAGE_PROMPT_TEMPLATE = VLMPromptTemplate(
+    task="chart_triage",
+    template_id="chart-triage-json",
+    template_version="0.1",
+    required_variables=["context"],
+    text=(
+        "You are assisting an auditable chart digitization workflow. Inspect "
+        "the image and return only a JSON object with proposal fields. "
+        "Required keys: chart_type, warnings, confidence. Optional keys: "
+        "title, x_axis, y_axis. Treat all values as uncertain proposals. "
+        "Do not return a numeric data table. Context: {context}"
+    ),
+)
+
+
+CHART_METADATA_PROMPT_TEMPLATE = VLMPromptTemplate(
+    task="chart_metadata",
+    template_id="chart-metadata-json",
+    template_version="0.1",
+    required_variables=["context"],
+    text=(
+        "You are assisting an auditable chart digitization workflow. Inspect "
+        "the image and return only a JSON object matching this proposal shape: "
+        "{{\"chart_type\": \"line|scatter|bar|histogram|boxplot|heatmap|unknown\", "
+        "\"title\": string or null, "
+        "\"x_axis\": {{\"label\": string or null, \"units\": string or null, "
+        "\"scale\": \"linear|log10\", \"tick_labels\": [string], "
+        "\"source\": \"vlm\", \"confidence\": number}}, "
+        "\"y_axis\": {{\"label\": string or null, \"units\": string or null, "
+        "\"scale\": \"linear|log10\", \"tick_labels\": [string], "
+        "\"source\": \"vlm\", \"confidence\": number}}, "
+        "\"legend\": {{\"entries\": object, \"confidence\": number}}, "
+        "\"series_colors\": [{{\"series_name\": string or null, "
+        "\"color\": \"#RRGGBB\", \"label\": string or null, "
+        "\"confidence\": number}}], "
+        "\"warnings\": [string], \"confidence\": number}}. "
+        "All values are proposals for review. Do not infer a numeric data "
+        "table. Context: {context}"
+    ),
+)
 
 
 def _image_data_url(path: Path) -> str:
@@ -388,13 +441,40 @@ def _extract_openai_message_text(response: dict[str, object]) -> str:
     return ""
 
 
-def _parse_chart_metadata_json(
+def parse_chart_metadata_response(response_text: str) -> VLMParsedResponse:
+    """Parse and validate a chart metadata proposal response."""
+
+    parsed_json, diagnostics = parse_json_object_response(response_text)
+    proposal = None
+    if parsed_json is not None:
+        try:
+            proposal = ChartMetadataProposal.model_validate(parsed_json)
+        except ValidationError as exc:
+            diagnostics.append(
+                Diagnostic(
+                    level="warning",
+                    code="vlm_validation_error",
+                    message="The VLM response JSON did not match the chart proposal schema.",
+                    context={"errors": exc.errors()},
+                )
+            )
+    return VLMParsedResponse(
+        parsed_json=parsed_json,
+        proposal=proposal,
+        diagnostics=diagnostics,
+    )
+
+
+def parse_json_object_response(
     response_text: str,
 ) -> tuple[dict[str, object] | None, list[Diagnostic]]:
+    """Parse a JSON object from a VLM response string."""
+
+    json_text, repair_diagnostics = _extract_json_object_text(response_text)
     try:
-        parsed = json.loads(response_text)
+        parsed = json.loads(json_text)
     except json.JSONDecodeError as exc:
-        return None, [
+        return None, repair_diagnostics + [
             Diagnostic(
                 level="warning",
                 code="vlm_invalid_json",
@@ -403,7 +483,7 @@ def _parse_chart_metadata_json(
             )
         ]
     if not isinstance(parsed, dict):
-        return None, [
+        return None, repair_diagnostics + [
             Diagnostic(
                 level="warning",
                 code="vlm_invalid_json_object",
@@ -411,7 +491,35 @@ def _parse_chart_metadata_json(
                 context={"parsed_type": type(parsed).__name__},
             )
         ]
-    return parsed, []
+    return parsed, repair_diagnostics
+
+
+def _extract_json_object_text(response_text: str) -> tuple[str, list[Diagnostic]]:
+    text = response_text.strip()
+    diagnostics: list[Diagnostic] = []
+    if text.startswith("```"):
+        lines = text.splitlines()
+        if len(lines) >= 3 and lines[-1].strip() == "```":
+            diagnostics.append(
+                Diagnostic(
+                    level="info",
+                    code="vlm_json_markdown_fence_removed",
+                    message="Removed markdown code fences from the VLM response.",
+                )
+            )
+            return "\n".join(lines[1:-1]).strip(), diagnostics
+    start = text.find("{")
+    end = text.rfind("}")
+    if start > 0 and end > start:
+        diagnostics.append(
+            Diagnostic(
+                level="info",
+                code="vlm_json_object_extracted",
+                message="Extracted the first JSON object from surrounding VLM response text.",
+            )
+        )
+        return text[start : end + 1], diagnostics
+    return text, diagnostics
 
 
 def _dict_or_empty(value: object) -> dict[str, object]:
@@ -431,6 +539,8 @@ __all__ = [
     "AxisRangeProposal",
     "AxisScaleProposal",
     "CalibrationHintProposal",
+    "CHART_METADATA_PROMPT_TEMPLATE",
+    "CHART_TRIAGE_PROMPT_TEMPLATE",
     "ChartMetadataProposal",
     "ChartTriageRequest",
     "ChartTriageResult",
@@ -443,8 +553,12 @@ __all__ = [
     "TickLabelProposal",
     "VLMBackend",
     "VLMBackendInfo",
+    "VLMParsedResponse",
     "VLMPromptRecord",
+    "VLMPromptTemplate",
     "VLMRawResponse",
     "VLMTask",
     "default_chart_metadata_prompt",
+    "parse_chart_metadata_response",
+    "parse_json_object_response",
 ]

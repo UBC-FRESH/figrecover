@@ -45,3 +45,6 @@ This is the append-only project narrative for `figrecover`.
 - Added a local VLM backend protocol and OpenAI-compatible backend boundary
   with lazy optional HTTP transport, image-plus-text request construction,
   structured proposal parsing, raw-response capture, and mocked backend tests.
+- Added versioned structured VLM prompt templates and JSON response parsing
+  helpers with diagnostics for markdown fences, surrounding response text,
+  invalid JSON, non-object JSON, and schema validation failures.
