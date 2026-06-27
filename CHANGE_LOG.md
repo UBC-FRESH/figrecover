@@ -54,3 +54,5 @@ This is the append-only project narrative for `figrecover`.
 - Completed Phase 4 with local VLM assistance records, an OpenAI-compatible
   backend boundary, structured prompt templates, response parsing diagnostics,
   metadata self-ensemble summaries, and local VLM system documentation.
+- Launched Phase 5 with GitHub parent and child issues for QA overlays,
+  quality metrics, review manifests, CLI review commands, and QA workflow docs.
