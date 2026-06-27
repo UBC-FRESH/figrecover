@@ -11,3 +11,6 @@ This is the append-only project narrative for `figrecover`.
   recovery first, optional local VLM assistance for chart metadata and QA.
 - Added governance, roadmap, planning, and documentation scaffolding for the
   phase/task/subtask development workflow.
+- Created the public GitHub repository `UBC-FRESH/figrecover`, pushed the
+  bootstrap commit, created the Phase 0 issue set, and added near-term Phase 1
+  and Phase 2 parent placeholders.

@@ -6,25 +6,24 @@ This roadmap is the current project plan and issue tracker map for
 The long-form package scope and implementation plan lives in
 `planning/package-scope-and-implementation-plan.md`.
 
-Issue numbers are `TBD` until the public `UBC-FRESH/figrecover` repository and
-initial GitHub issues are created.
+The public GitHub repository is `UBC-FRESH/figrecover`.
 
 ## Phase 0: Governance And Public Repo Bootstrap
 
-GitHub parent issue: TBD
+GitHub parent issue: #1
 
 Goal: establish the open-source repo contract before expanding code.
 
-- [x] P0.1 Create project overview and agent operating contract. Child issue: TBD.
-- [x] P0.2 Establish roadmap, changelog, planning area, license, and ignore rules. Child issue: TBD.
-- [x] P0.3 Normalize package metadata and preserve current scaffold as bootstrap seed. Child issue: TBD.
-- [ ] P0.4 Create initial GitHub issues after the public repo exists. Child issue: TBD.
+- [x] P0.1 Create project overview and agent operating contract. Child issue: #4.
+- [x] P0.2 Establish roadmap, changelog, planning area, license, and ignore rules. Child issue: #3.
+- [x] P0.3 Normalize package metadata and preserve current scaffold as bootstrap seed. Child issue: #2.
+- [x] P0.4 Create initial GitHub issues after the public repo exists. Child issue: #5.
 
-Status: active.
+Status: complete.
 
 ## Phase 1: Architecture And Dependency Research
 
-GitHub parent issue: TBD
+GitHub parent issue: #6
 
 Goal: decide package boundaries before adding more features.
 
@@ -33,11 +32,12 @@ Goal: decide package boundaries before adding more features.
 - [x] P1.3 Define data/provenance contract. Child issue: TBD.
 - [x] P1.4 Record architecture contract and Phase 2 inputs. Child issue: TBD.
 
-Status: active locally; GitHub issue creation pending public repo setup.
+Status: complete locally; child issue sync pending if Phase 1 is reopened for
+formal issue closeout.
 
 ## Phase 2: Core Records, Calibration, And Extraction API
 
-GitHub parent issue: TBD
+GitHub parent issue: #7
 
 Goal: build the durable Python API for calibrated image-level extraction.
 
