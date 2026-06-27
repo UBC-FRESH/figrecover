@@ -93,11 +93,11 @@ Active branch: `feature/p5-qa-review-human-workflows`
 
 Goal: make recovered data inspectable and defensible.
 
-- [ ] P5.1 Add overlay generation. Child issue: #33.
-- [ ] P5.2 Add quality metrics. Child issue: #34.
-- [ ] P5.3 Add review manifest. Child issue: #35.
-- [ ] P5.4 Add CLI review commands. Child issue: #36.
-- [ ] P5.5 Document QA workflow. Child issue: #37.
+- [x] P5.1 Add overlay generation. Child issue: #33.
+- [x] P5.2 Add quality metrics. Child issue: #34.
+- [x] P5.3 Add review manifest. Child issue: #35.
+- [x] P5.4 Add CLI review commands. Child issue: #36.
+- [x] P5.5 Document QA workflow. Child issue: #37.
 
 Status: active.
 

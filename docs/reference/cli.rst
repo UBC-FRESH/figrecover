@@ -46,3 +46,25 @@ Crop candidates from source page images:
 Manifest entries preserve candidate provenance. Source PDFs, rendered pages,
 crops, and private-document manifests should remain under ignored local output
 directories unless explicitly sanitized for tracking.
+
+Review
+------
+
+Generate visual and tabular review artifacts from digitization JSON results:
+
+.. code-block:: bash
+
+   figrecover review bundle tmp/results/fig-001.json --out-dir tmp/review
+
+Summarize review status counts and low-confidence entries:
+
+.. code-block:: bash
+
+   figrecover review summarize tmp/review/review.jsonl --json
+
+Export accepted or manually corrected tables only:
+
+.. code-block:: bash
+
+   figrecover review export-accepted tmp/review/review.jsonl \
+      --out-dir tmp/accepted-tables

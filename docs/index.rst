@@ -15,6 +15,7 @@ VLM assistance are planned, optional layers.
    guides/quickstart
    guides/workflow-boundaries
    guides/local-vlm-assistance
+   guides/qa-review-workflow
 
 .. toctree::
    :maxdepth: 2

@@ -56,3 +56,6 @@ This is the append-only project narrative for `figrecover`.
   metadata self-ensemble summaries, and local VLM system documentation.
 - Launched Phase 5 with GitHub parent and child issues for QA overlays,
   quality metrics, review manifests, CLI review commands, and QA workflow docs.
+- Added Phase 5 QA/review workflows: visual overlays, figure quality metrics,
+  JSONL review manifests, review bundle/summarize/export CLI commands, API
+  reference entries, and a Sphinx guide for human-in-the-loop review.

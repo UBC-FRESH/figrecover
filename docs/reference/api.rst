@@ -53,6 +53,15 @@ VLM Proposals
 .. automodule:: figrecover.vlm
    :members:
 
+QA And Review
+-------------
+
+.. automodule:: figrecover.qa
+   :members:
+
+.. automodule:: figrecover.review
+   :members:
+
 Digitization
 ------------
 
