@@ -11,6 +11,8 @@ from figrecover.vlm import (
     ChartTriageRequest,
     ChartTriageResult,
     LegendProposal,
+    OpenAICompatibleBackendConfig,
+    OpenAICompatibleVLMBackend,
     SeriesColorProposal,
     TickLabelProposal,
     VLMBackendInfo,
@@ -102,3 +104,116 @@ def test_vlm_records_validate_ids_and_series_colours():
 
     with pytest.raises(ValueError, match="color must be a #RRGGBB hex string"):
         SeriesColorProposal(color="blue")
+
+
+class FakeTransport:
+    def __init__(self, response: dict[str, object] | None = None, error: Exception | None = None):
+        self.response = response
+        self.error = error
+        self.calls: list[dict[str, object]] = []
+
+    def post_json(
+        self,
+        *,
+        url: str,
+        headers: dict[str, str],
+        payload: dict[str, object],
+        timeout_s: float,
+    ) -> dict[str, object]:
+        self.calls.append(
+            {
+                "url": url,
+                "headers": headers,
+                "payload": payload,
+                "timeout_s": timeout_s,
+            }
+        )
+        if self.error:
+            raise self.error
+        assert self.response is not None
+        return self.response
+
+
+def test_openai_compatible_backend_returns_structured_proposal(tmp_path: Path):
+    image_path = tmp_path / "chart.png"
+    image_path.write_bytes(b"not-a-real-image-but-encoded-for-request")
+    transport = FakeTransport(
+        response={
+            "id": "response-1",
+            "choices": [
+                {
+                    "message": {
+                        "content": (
+                            '{"chart_type": "line", "title": "Synthetic chart", '
+                            '"series_colors": [{"color": "#1f77b4", "series_name": "A"}], '
+                            '"confidence": 0.8}'
+                        )
+                    },
+                    "finish_reason": "stop",
+                }
+            ],
+            "usage": {"prompt_tokens": 12, "completion_tokens": 8},
+        }
+    )
+    backend = OpenAICompatibleVLMBackend(
+        OpenAICompatibleBackendConfig(
+            model="local-vlm",
+            base_url="http://127.0.0.1:8000/v1",
+            api_key="test-key",
+            temperature=0.1,
+        ),
+        transport=transport,
+    )
+
+    result = backend.describe_chart(
+        ChartTriageRequest(request_id="triage-3", image_path=image_path)
+    )
+
+    assert result.proposal is not None
+    assert result.proposal.chart_type == "line"
+    assert result.proposal.series_colors[0].color == "#1f77b4"
+    assert result.raw_response is not None
+    assert result.raw_response.backend.model == "local-vlm"
+    assert result.raw_response.metadata["finish_reason"] == "stop"
+    assert result.diagnostics == []
+    assert transport.calls[0]["url"] == "http://127.0.0.1:8000/v1/chat/completions"
+    assert transport.calls[0]["headers"]["Authorization"] == "Bearer test-key"
+    payload = transport.calls[0]["payload"]
+    assert payload["model"] == "local-vlm"
+    assert payload["response_format"] == {"type": "json_object"}
+
+
+def test_openai_compatible_backend_records_invalid_json_diagnostics(tmp_path: Path):
+    image_path = tmp_path / "chart.png"
+    image_path.write_bytes(b"image")
+    backend = OpenAICompatibleVLMBackend(
+        OpenAICompatibleBackendConfig(model="local-vlm"),
+        transport=FakeTransport(
+            response={"choices": [{"message": {"content": "not json"}, "finish_reason": "stop"}]}
+        ),
+    )
+
+    result = backend.describe_chart(
+        ChartTriageRequest(request_id="triage-4", image_path=image_path)
+    )
+
+    assert result.proposal is None
+    assert result.raw_response is not None
+    assert result.diagnostics[0].code == "vlm_invalid_json"
+
+
+def test_openai_compatible_backend_records_backend_errors(tmp_path: Path):
+    image_path = tmp_path / "chart.png"
+    image_path.write_bytes(b"image")
+    backend = OpenAICompatibleVLMBackend(
+        OpenAICompatibleBackendConfig(model="local-vlm"),
+        transport=FakeTransport(error=RuntimeError("server unavailable")),
+    )
+
+    result = backend.describe_chart(
+        ChartTriageRequest(request_id="triage-5", image_path=image_path)
+    )
+
+    assert result.proposal is None
+    assert result.raw_response is None
+    assert result.diagnostics[0].code == "vlm_backend_error"

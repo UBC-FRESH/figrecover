@@ -42,3 +42,6 @@ This is the append-only project narrative for `figrecover`.
 - Added VLM proposal records for chart triage requests/results, metadata
   proposals, legend/tick/series-colour proposals, calibration hints, prompt
   provenance, raw responses, and validation diagnostics.
+- Added a local VLM backend protocol and OpenAI-compatible backend boundary
+  with lazy optional HTTP transport, image-plus-text request construction,
+  structured proposal parsing, raw-response capture, and mocked backend tests.
