@@ -300,6 +300,44 @@ Tasks:
 
 Acceptance: public alpha can be installed, documented, tested, and cited as experimental software.
 
+### Phase 9: Scholarly Publication And Peer Review
+
+Goal: prepare the v1.0.0-ready package for pyOpenSci software peer review, then JOSS companion paper submission.
+
+Tasks:
+- P9.1 Confirm publication readiness and scope
+  - Verify package is public, OSI/MIT licensed, installable, documented, tested, and actively maintained
+  - Confirm pyOpenSci scope fit as scientific workflow/data processing software
+  - Confirm JOSS scope fit as research software with credible scholarly significance, not a one-off utility
+- P9.2 Prepare pyOpenSci review materials
+  - Audit README for statement of need, installation, quickstart, badges, community guidelines, metadata, and supported Python/package versions
+  - Ensure docs include quickstart, API reference, CLI reference, examples, corpus workflow, QA workflow, and publication-safe examples
+  - Prepare pyOpenSci submission metadata: submitting author, maintainers, package name, one-line description, repository, docs URL, version submitted, archive/DOI, and maintenance commitment
+  - Include response plan for review issues and reviewer feedback
+- P9.3 Create v1.0.0 release candidate and archive
+  - Cut a v1.0.0 release candidate after all functional, docs, CI, packaging, and review-readiness checks pass
+  - Publish final v1.0.0 to PyPI
+  - Create a GitHub release and Zenodo/archive DOI for the reviewed version
+  - Verify source distribution and wheel install cleanly from PyPI
+- P9.4 Submit to pyOpenSci and respond to review
+  - Open a pyOpenSci software-review issue using their submission template
+  - Track pyOpenSci review feedback as linked GitHub issues/PRs in `UBC-FRESH/figrecover`
+  - Keep roadmap, changelog, docs, and release notes synchronized through review revisions
+  - Add pyOpenSci badge after acceptance
+- P9.5 Prepare and submit JOSS companion paper
+  - Add `paper/paper.md`, `paper/paper.bib`, and any publication-safe figures
+  - Paper sections must cover Summary, Statement of need, State of the field, Software design, Research impact statement, AI usage disclosure, Acknowledgements, and References
+  - Keep the paper focused on software purpose, design, need, field context, and research impact; keep API details in package docs
+  - Submit to JOSS after pyOpenSci acceptance and link the accepted pyOpenSci review for fast-track handling
+- P9.6 Complete publication closeout
+  - Add JOSS DOI and citation metadata after acceptance
+  - Add pyOpenSci and JOSS badges to README
+  - Add `CITATION.cff` or update it if already present
+  - Update docs with citation instructions
+  - Close Phase 9 with PR, changelog entry, release links, pyOpenSci review link, JOSS paper link, and DOI links
+
+Acceptance: `figrecover` has passed pyOpenSci review, has a submitted or accepted JOSS companion paper, records citation metadata and badges, and preserves a clean public release/archive trail for the reviewed v1.0.0 package.
+
 ## Dependency Policy
 
 Default runtime dependencies:

@@ -34,3 +34,5 @@ This is the append-only project narrative for `figrecover`.
 - Completed Phase 3 with a parser adapter protocol, manual candidate adapter,
   PyMuPDF embedded image-block candidate adapter, parser deferral notes, and
   Phase 4 VLM assistance inputs.
+- Added planned Phase 9 for pyOpenSci package peer review and JOSS companion
+  paper publication once `figrecover` is v1.0.0 release-ready.
