@@ -36,3 +36,15 @@ the package into a poor dependency, license, or workflow fit.
   optional extras.
 - Build internal records around provenance and diagnostics so optional tools
   can be swapped without changing downstream FEMIC/FHOPS integration contracts.
+
+## Phase 3 Adapter Decisions
+
+- Implemented the first parser boundary as a small protocol that emits
+  canonical `FigureCandidate` records.
+- Implemented PyMuPDF embedded image-block candidate discovery behind the
+  existing `pdf` extra. The adapter maps PDF page-space bboxes onto rendered
+  page pixel coordinates and records source/parser metadata.
+- Deferred Docling, MinerU, and Surya production adapters. They remain useful
+  candidates, but their broader install footprints and layout/OCR scope should
+  not enter the default package or block the deterministic PDF preparation
+  workflow.

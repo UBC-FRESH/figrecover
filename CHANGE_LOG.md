@@ -31,3 +31,6 @@ This is the append-only project narrative for `figrecover`.
   `figrecover pdf render`, `figrecover figures list`, `figrecover figures crop`,
   synthetic PDF tests, and document-preparation docs. Parser adapter work remains
   open for P3.3.
+- Completed Phase 3 with a parser adapter protocol, manual candidate adapter,
+  PyMuPDF embedded image-block candidate adapter, parser deferral notes, and
+  Phase 4 VLM assistance inputs.

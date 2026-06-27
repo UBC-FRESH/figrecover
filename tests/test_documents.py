@@ -86,3 +86,21 @@ def test_render_pdf_pages_uses_one_based_page_numbers(tmp_path: Path):
     assert [page.height_px for page in rendered] == [72, 72]
     assert all(page.image_path.exists() for page in rendered)
     assert rendered[0].metadata["page_count"] == 3
+
+
+def test_render_pdf_pages_supports_all_pages(tmp_path: Path):
+    fitz = pytest.importorskip("fitz")
+    pdf_path = tmp_path / "all-pages.pdf"
+    document = fitz.open()
+    document.new_page(width=72, height=72)
+    document.new_page(width=72, height=72)
+    document.save(pdf_path)
+    document.close()
+
+    rendered = render_pdf_pages(pdf_path, tmp_path / "pages", dpi=72)
+
+    assert [page.page_number for page in rendered] == [1, 2]
+    assert [page.image_path.name for page in rendered] == [
+        "all-pages-p0001.png",
+        "all-pages-p0002.png",
+    ]

@@ -41,6 +41,12 @@ Documents And Manifests
 .. automodule:: figrecover.manifest
    :members:
 
+Parser Adapters
+---------------
+
+.. automodule:: figrecover.adapters
+   :members:
+
 Digitization
 ------------
 

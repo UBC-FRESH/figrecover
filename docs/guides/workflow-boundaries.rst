@@ -31,6 +31,12 @@ The first supported document-preparation workflow is:
 #. Crop manifest candidates into figure images.
 #. Pass prepared crops to the calibrated extraction core.
 
+Candidate manifests can be created manually or by parser adapters. The first
+adapter boundary is intentionally narrow: adapters emit canonical
+``FigureCandidate`` records. The PyMuPDF image-block adapter can identify
+embedded PDF images and map their page-space bounding boxes onto rendered-page
+pixel coordinates. These are candidates, not guaranteed charts.
+
 Figure candidate manifests are auditable work queues, not proof that a crop
 contains a recoverable chart. Each entry should preserve source document, page
 number, bounding box, candidate source, confidence, image paths, and any caption
@@ -50,7 +56,7 @@ Current diagnostic codes include:
 
 Planned optional layers:
 
-* document parser adapters for candidate figures and captions;
+* heavier document parser adapters for candidate figures and captions;
 * local VLM assistance for chart type, labels, legends, series colours, and
   calibration proposals;
 * QA overlays and review manifests;
