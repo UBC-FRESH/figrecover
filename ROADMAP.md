@@ -136,7 +136,9 @@ systems.
 - [x] P7.4 Add FHOPS adapter. Child issue: #50.
 - [x] P7.5 Add docs and examples. Child issue: #51.
 
-Status: active.
+Status: complete.
+
+Pull request: TBD.
 
 ## Phase 8: Documentation, Examples, And Public Alpha
 

@@ -76,3 +76,6 @@ This is the append-only project narrative for `figrecover`.
 - Added the FEMIC/FHOPS integration survey, generic modelling export helpers,
   FEMIC and FHOPS projection adapters, synthetic integration tests, and Sphinx
   integration documentation.
+- Closed Phase 7 with public-safe integration boundaries, review-gated
+  modelling exports, passing tests/docs/package checks, and Phase 8 public alpha
+  inputs recorded.
