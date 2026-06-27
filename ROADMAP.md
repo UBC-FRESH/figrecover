@@ -109,6 +109,8 @@ GitHub parent issue: #39
 
 Active branch: `feature/p6-batch-corpus-pipeline`
 
+Pull request: TBD
+
 Goal: support large technical-document corpora on workstation hardware.
 
 - [x] P6.1 Add pipeline config. Child issue: #40.
@@ -117,7 +119,7 @@ Goal: support large technical-document corpora on workstation hardware.
 - [x] P6.4 Add failure recovery. Child issue: #43.
 - [x] P6.5 Add corpus CLI. Child issue: #44.
 
-Status: active.
+Status: complete.
 
 ## Phase 7: FEMIC/FHOPS Integration Adapters
 

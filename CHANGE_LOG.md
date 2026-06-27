@@ -68,3 +68,5 @@ This is the append-only project narrative for `figrecover`.
   helpers, run manifests, deterministic PDF rendering/cropping execution,
   resume and failure diagnostics, accepted-table export, corpus CLI commands,
   synthetic tests, and corpus workflow documentation.
+- Completed Phase 6 with all corpus pipeline child issues closed, verification
+  passing, and Phase 7 FEMIC/FHOPS integration inputs recorded.
