@@ -82,3 +82,6 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 8 with GitHub parent and child issues for full public-alpha
   docs, publication-safe examples, CI, release workflow, and `0.1.0a1`
   publication.
+- Added public-alpha documentation pages for manual calibrated extraction and
+  limitations, refreshed quickstart/navigation/CLI docs, and corrected stale
+  workflow-boundary wording now that corpus, VLM, and integration layers exist.

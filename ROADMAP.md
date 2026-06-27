@@ -148,7 +148,7 @@ Active branch: `feature/p8-docs-examples-public-alpha`
 
 Goal: make the package usable by external power users.
 
-- [ ] P8.1 Build full Sphinx docs. Child issue: #54.
+- [x] P8.1 Build full Sphinx docs. Child issue: #54.
 - [ ] P8.2 Add examples. Child issue: #55.
 - [ ] P8.3 Add CI and release checks. Child issue: #56.
 - [ ] P8.4 Add release workflow. Child issue: #57.

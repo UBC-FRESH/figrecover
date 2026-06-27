@@ -65,3 +65,12 @@ When combining many figures, include provenance columns:
        "harvest_with_provenance.csv",
        index=False,
    )
+
+Next Steps
+----------
+
+For a single chart crop, continue with :doc:`manual-calibrated-extraction`.
+For a directory of PDFs, continue with :doc:`corpus-workflow`. For auditable
+human review, continue with :doc:`qa-review-workflow`. Review
+:doc:`limitations` before using recovered values as scientific or operational
+model inputs.
