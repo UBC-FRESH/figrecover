@@ -85,3 +85,6 @@ This is the append-only project narrative for `figrecover`.
 - Added public-alpha documentation pages for manual calibrated extraction and
   limitations, refreshed quickstart/navigation/CLI docs, and corrected stale
   workflow-boundary wording now that corpus, VLM, and integration layers exist.
+- Added publication-safe examples for synthetic chart extraction, synthetic PDF
+  corpus rendering, and mocked VLM metadata parsing, with Sphinx example docs
+  and smoke-test coverage.

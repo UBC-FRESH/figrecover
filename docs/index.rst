@@ -26,6 +26,7 @@ chooses an experimental VLM-only path.
    guides/qa-review-workflow
    guides/corpus-workflow
    guides/integrations
+   guides/examples
    guides/limitations
 
 .. toctree::
