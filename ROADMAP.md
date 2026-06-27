@@ -138,7 +138,7 @@ systems.
 
 Status: complete.
 
-Pull request: TBD.
+Pull request: #52.
 
 ## Phase 8: Documentation, Examples, And Public Alpha
 
