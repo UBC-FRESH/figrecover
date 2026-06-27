@@ -68,6 +68,18 @@ Corpus Pipeline
 .. automodule:: figrecover.pipeline
    :members:
 
+Integration Exports
+-------------------
+
+.. automodule:: figrecover.integrations.generic
+   :members:
+
+.. automodule:: figrecover.integrations.femic
+   :members:
+
+.. automodule:: figrecover.integrations.fhops
+   :members:
+
 Digitization
 ------------
 

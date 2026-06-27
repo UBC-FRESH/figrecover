@@ -123,18 +123,22 @@ Status: complete.
 
 ## Phase 7: FEMIC/FHOPS Integration Adapters
 
-GitHub parent issue: TBD
+GitHub parent issue: #46
+
+Active branch: `feature/p7-femic-fhops-integrations`
 
 Goal: make `figrecover` usable as a component in larger FRESH modelling
 systems.
 
-- [ ] P7.1 Inspect FEMIC/FHOPS ingestion conventions. Child issue: TBD.
-- [ ] P7.2 Add generic modelling export. Child issue: TBD.
-- [ ] P7.3 Add FEMIC adapter. Child issue: TBD.
-- [ ] P7.4 Add FHOPS adapter. Child issue: TBD.
-- [ ] P7.5 Add docs and examples. Child issue: TBD.
+- [x] P7.1 Inspect FEMIC/FHOPS ingestion conventions. Child issue: #47.
+- [x] P7.2 Add generic modelling export. Child issue: #48.
+- [x] P7.3 Add FEMIC adapter. Child issue: #49.
+- [x] P7.4 Add FHOPS adapter. Child issue: #50.
+- [x] P7.5 Add docs and examples. Child issue: #51.
 
-Status: planned.
+Status: complete.
+
+Pull request: #52.
 
 ## Phase 8: Documentation, Examples, And Public Alpha
 
