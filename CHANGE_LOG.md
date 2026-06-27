@@ -73,3 +73,6 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 7 with GitHub parent and child issues for FEMIC/FHOPS
   convention inspection, generic modelling export, domain adapters, and
   integration documentation.
+- Added the FEMIC/FHOPS integration survey, generic modelling export helpers,
+  FEMIC and FHOPS projection adapters, synthetic integration tests, and Sphinx
+  integration documentation.

@@ -130,11 +130,11 @@ Active branch: `feature/p7-femic-fhops-integrations`
 Goal: make `figrecover` usable as a component in larger FRESH modelling
 systems.
 
-- [ ] P7.1 Inspect FEMIC/FHOPS ingestion conventions. Child issue: #47.
-- [ ] P7.2 Add generic modelling export. Child issue: #48.
-- [ ] P7.3 Add FEMIC adapter. Child issue: #49.
-- [ ] P7.4 Add FHOPS adapter. Child issue: #50.
-- [ ] P7.5 Add docs and examples. Child issue: #51.
+- [x] P7.1 Inspect FEMIC/FHOPS ingestion conventions. Child issue: #47.
+- [x] P7.2 Add generic modelling export. Child issue: #48.
+- [x] P7.3 Add FEMIC adapter. Child issue: #49.
+- [x] P7.4 Add FHOPS adapter. Child issue: #50.
+- [x] P7.5 Add docs and examples. Child issue: #51.
 
 Status: active.
 
