@@ -15,6 +15,16 @@ from figrecover.documents import crop_figure_candidates, render_pdf_pages
 from figrecover.io import read_result_json, write_points_csv, write_result
 from figrecover.manifest import FigureManifest
 from figrecover.models import DigitizeSpec, SeriesSpec
+from figrecover.pipeline import (
+    CorpusInput,
+    CorpusRenderOptions,
+    CorpusRunConfig,
+    CorpusWorkerOptions,
+    export_accepted_tables,
+    initialize_corpus,
+    run_corpus,
+    summarize_run,
+)
 from figrecover.qa import compute_quality_metrics, render_overlay, write_quality_metrics
 from figrecover.review import ReviewEntry, ReviewManifest
 
@@ -22,9 +32,11 @@ app = typer.Typer(help="Recover approximate source tables from calibrated figure
 pdf_app = typer.Typer(help="Render PDF pages for figure recovery workflows.")
 figures_app = typer.Typer(help="List and crop figure candidate manifests.")
 review_app = typer.Typer(help="Generate and summarize human review artifacts.")
+corpus_app = typer.Typer(help="Run workstation-scale corpus workflows.")
 app.add_typer(pdf_app, name="pdf")
 app.add_typer(figures_app, name="figures")
 app.add_typer(review_app, name="review")
+app.add_typer(corpus_app, name="corpus")
 console = Console()
 
 
@@ -360,6 +372,84 @@ def review_export_accepted_command(
         "skipped": skipped,
     }
     console.print(json.dumps(payload, indent=2))
+
+
+@corpus_app.command(name="init")
+def corpus_init_command(
+    output_root: Annotated[Path, typer.Argument(help="Corpus output root.")],
+    input_dir: Annotated[
+        Path | None, typer.Option(help="Directory containing source PDFs.")
+    ] = None,
+    pdfs: Annotated[
+        list[Path], typer.Option("--pdf", help="Explicit source PDF path. Repeatable.")
+    ] = [],
+    config_path: Annotated[
+        Path | None,
+        typer.Option(help="Config path to write. Defaults to manifests/corpus-config.json."),
+    ] = None,
+    run_id: Annotated[str, typer.Option(help="Stable run identifier.")] = "corpus-run",
+    pdf_glob: Annotated[str, typer.Option(help="Input directory PDF glob.")] = "*.pdf",
+    pages: Annotated[
+        str | None,
+        typer.Option(help="One-based page selection such as '1,3-5'. Defaults to all pages."),
+    ] = None,
+    dpi: Annotated[int, typer.Option(help="Render DPI.")] = 300,
+    max_workers: Annotated[int, typer.Option(help="CPU worker count.")] = 1,
+) -> None:
+    """Initialize a corpus output root and config file."""
+
+    config = CorpusRunConfig(
+        run_id=run_id,
+        inputs=CorpusInput(pdfs=pdfs, input_dir=input_dir, pdf_glob=pdf_glob),
+        output_root=output_root,
+        render=CorpusRenderOptions(dpi=dpi, pages=pages),
+        workers=CorpusWorkerOptions(max_workers=max_workers),
+    )
+    payload = initialize_corpus(config)
+    if config_path is not None:
+        config.write_json(config_path)
+        payload["config_path"] = str(config_path)
+    console.print(json.dumps(payload, indent=2))
+
+
+@corpus_app.command(name="run")
+def corpus_run_command(
+    config: Annotated[Path, typer.Argument(exists=True, readable=True, help="Corpus config.")]
+) -> None:
+    """Run a configured corpus workflow."""
+
+    run_config = CorpusRunConfig.read(config)
+    manifest = run_corpus(run_config)
+    payload = {
+        "config": str(config),
+        "manifest": str(run_config.output_root / "manifests" / "run-manifest.json"),
+        **manifest.summary(),
+    }
+    console.print(json.dumps(payload, indent=2))
+
+
+@corpus_app.command(name="summarize")
+def corpus_summarize_command(
+    manifest: Annotated[
+        Path, typer.Argument(exists=True, readable=True, help="Run manifest JSON path.")
+    ],
+) -> None:
+    """Summarize a corpus run manifest."""
+
+    console.print(json.dumps({"manifest": str(manifest), **summarize_run(manifest)}, indent=2))
+
+
+@corpus_app.command(name="export")
+def corpus_export_command(
+    review_manifest: Annotated[
+        Path,
+        typer.Argument(exists=True, readable=True, help="Review manifest JSONL path."),
+    ],
+    out_dir: Annotated[Path, typer.Option(help="Output directory for accepted tables.")],
+) -> None:
+    """Export accepted or manually corrected review tables."""
+
+    console.print(json.dumps(export_accepted_tables(review_manifest, out_dir), indent=2))
 
 
 if __name__ == "__main__":

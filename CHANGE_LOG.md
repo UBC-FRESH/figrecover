@@ -64,3 +64,7 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 6 with GitHub parent and child issues for corpus pipeline
   config, workstation execution, artifact layout, failure recovery, and corpus
   CLI commands.
+- Added Phase 6 corpus pipeline support with config records, artifact layout
+  helpers, run manifests, deterministic PDF rendering/cropping execution,
+  resume and failure diagnostics, accepted-table export, corpus CLI commands,
+  synthetic tests, and corpus workflow documentation.

@@ -68,3 +68,34 @@ Export accepted or manually corrected tables only:
 
    figrecover review export-accepted tmp/review/review.jsonl \
       --out-dir tmp/accepted-tables
+
+Corpus
+------
+
+Initialize a corpus output root and config:
+
+.. code-block:: bash
+
+   figrecover corpus init tmp/corpus \
+      --pdf report.pdf \
+      --config-path tmp/corpus-config.json \
+      --dpi 200
+
+Run a configured corpus:
+
+.. code-block:: bash
+
+   figrecover corpus run tmp/corpus-config.json
+
+Summarize a run manifest:
+
+.. code-block:: bash
+
+   figrecover corpus summarize tmp/corpus/manifests/run-manifest.json
+
+Export accepted review tables:
+
+.. code-block:: bash
+
+   figrecover corpus export tmp/review/review.jsonl \
+      --out-dir tmp/corpus/tables/accepted

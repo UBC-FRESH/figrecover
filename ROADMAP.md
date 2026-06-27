@@ -111,11 +111,11 @@ Active branch: `feature/p6-batch-corpus-pipeline`
 
 Goal: support large technical-document corpora on workstation hardware.
 
-- [ ] P6.1 Add pipeline config. Child issue: #40.
-- [ ] P6.2 Add multiprocessing execution. Child issue: #41.
-- [ ] P6.3 Add artifact layout. Child issue: #42.
-- [ ] P6.4 Add failure recovery. Child issue: #43.
-- [ ] P6.5 Add corpus CLI. Child issue: #44.
+- [x] P6.1 Add pipeline config. Child issue: #40.
+- [x] P6.2 Add multiprocessing execution. Child issue: #41.
+- [x] P6.3 Add artifact layout. Child issue: #42.
+- [x] P6.4 Add failure recovery. Child issue: #43.
+- [x] P6.5 Add corpus CLI. Child issue: #44.
 
 Status: active.
 

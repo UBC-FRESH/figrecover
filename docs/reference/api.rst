@@ -62,6 +62,12 @@ QA And Review
 .. automodule:: figrecover.review
    :members:
 
+Corpus Pipeline
+---------------
+
+.. automodule:: figrecover.pipeline
+   :members:
+
 Digitization
 ------------
 
