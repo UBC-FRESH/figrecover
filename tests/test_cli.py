@@ -12,9 +12,10 @@ from figrecover import (
     SeriesSpec,
 )
 from figrecover.cli import app
-from figrecover.io import write_points_csv
+from figrecover.io import write_points_csv, write_result_json
 from figrecover.manifest import FigureManifest
 from figrecover.records import BoundingBox, FigureCandidate
+from figrecover.review import ReviewEntry, ReviewManifest
 
 
 def test_digitize_image_cli_writes_csv(tmp_path: Path):
@@ -185,3 +186,122 @@ def test_pdf_render_cli_writes_json_summary(tmp_path: Path):
     assert result.exit_code == 0
     assert '"page_count": 1' in result.stdout
     assert (tmp_path / "pages" / "synthetic-p0001.png").exists()
+
+
+def test_review_bundle_cli_writes_overlay_metrics_table_and_manifest(tmp_path: Path):
+    image_path = tmp_path / "crop.png"
+    Image.new("RGB", (100, 100), "white").save(image_path)
+    spec = DigitizeSpec(
+        image_id="run-1",
+        source_figure_id="fig-1",
+        calibration=Calibration.from_plot_bounds(
+            plot_left=10,
+            plot_right=90,
+            plot_top=10,
+            plot_bottom=90,
+            x_min=0,
+            x_max=1,
+            y_min=0,
+            y_max=1,
+        ),
+        series=[SeriesSpec(name="series", color="#1f77b4")],
+    )
+    result_json = tmp_path / "result.json"
+    write_result_json(
+        DigitizeResult(
+            spec=spec,
+            image_path=image_path,
+            width=100,
+            height=100,
+            series=[
+                SeriesResult(
+                    spec=spec.series[0],
+                    points=[
+                        DataPoint(
+                            series="series",
+                            x=0.5,
+                            y=0.5,
+                            x_pixel=50,
+                            y_pixel=50,
+                        )
+                    ],
+                )
+            ],
+        ),
+        result_json,
+    )
+
+    output = CliRunner().invoke(
+        app,
+        [
+            "review",
+            "bundle",
+            str(result_json),
+            "--out-dir",
+            str(tmp_path / "review"),
+        ],
+    )
+
+    assert output.exit_code == 0
+    assert '"result_count": 1' in output.stdout
+    assert (tmp_path / "review" / "review.jsonl").exists()
+    assert (tmp_path / "review" / "overlays" / "result-overlay.png").exists()
+    assert (tmp_path / "review" / "metrics" / "result-metrics.json").exists()
+    assert (tmp_path / "review" / "tables" / "result.csv").exists()
+
+
+def test_review_summarize_cli_emits_low_confidence_json(tmp_path: Path):
+    manifest_path = tmp_path / "review.jsonl"
+    ReviewManifest.from_entries(
+        [
+            ReviewEntry(
+                review_id="review-1",
+                status="needs_review",
+                metadata={"review_priority": "high"},
+            )
+        ]
+    ).write_jsonl(manifest_path)
+
+    output = CliRunner().invoke(app, ["review", "summarize", str(manifest_path), "--json"])
+
+    assert output.exit_code == 0
+    assert '"entry_count": 1' in output.stdout
+    assert '"needs_review": 1' in output.stdout
+
+
+def test_review_export_accepted_cli_copies_only_accepted_tables(tmp_path: Path):
+    accepted_table = tmp_path / "accepted.csv"
+    rejected_table = tmp_path / "rejected.csv"
+    accepted_table.write_text("series,x,y\nseries,1,2\n", encoding="utf-8")
+    rejected_table.write_text("series,x,y\nseries,3,4\n", encoding="utf-8")
+    manifest_path = tmp_path / "review.jsonl"
+    ReviewManifest.from_entries(
+        [
+            ReviewEntry(
+                review_id="accepted-1",
+                status="accepted",
+                table_path=accepted_table,
+            ),
+            ReviewEntry(
+                review_id="rejected-1",
+                status="rejected",
+                table_path=rejected_table,
+            ),
+        ]
+    ).write_jsonl(manifest_path)
+
+    output = CliRunner().invoke(
+        app,
+        [
+            "review",
+            "export-accepted",
+            str(manifest_path),
+            "--out-dir",
+            str(tmp_path / "accepted"),
+        ],
+    )
+
+    assert output.exit_code == 0
+    assert '"exported_count": 1' in output.stdout
+    assert (tmp_path / "accepted" / "accepted-1.csv").exists()
+    assert not (tmp_path / "accepted" / "rejected-1.csv").exists()

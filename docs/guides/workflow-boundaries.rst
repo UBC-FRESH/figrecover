@@ -57,8 +57,13 @@ Current diagnostic codes include:
 Planned optional layers:
 
 * heavier document parser adapters for candidate figures and captions;
-* QA overlays and review manifests;
+* batch corpus orchestration with resumable workers;
 * FEMIC/FHOPS export adapters.
+
+QA overlays, quality metrics, and review manifests are now available for
+human-in-the-loop inspection after digitization. They are intentionally separate
+from extraction so downstream systems can require explicit acceptance before
+using recovered tables as model inputs.
 
 Local VLM assistance can propose chart type, labels, legends, series colours,
 calibration hints, and warnings. VLM outputs are proposals. They should help

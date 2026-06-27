@@ -87,17 +87,21 @@ Status: complete.
 
 ## Phase 5: QA, Review, And Human-In-The-Loop Workflows
 
-GitHub parent issue: TBD
+GitHub parent issue: #32
+
+Active branch: `feature/p5-qa-review-human-workflows`
+
+Pull request: #38
 
 Goal: make recovered data inspectable and defensible.
 
-- [ ] P5.1 Add overlay generation. Child issue: TBD.
-- [ ] P5.2 Add quality metrics. Child issue: TBD.
-- [ ] P5.3 Add review manifest. Child issue: TBD.
-- [ ] P5.4 Add CLI review commands. Child issue: TBD.
-- [ ] P5.5 Document QA workflow. Child issue: TBD.
+- [x] P5.1 Add overlay generation. Child issue: #33.
+- [x] P5.2 Add quality metrics. Child issue: #34.
+- [x] P5.3 Add review manifest. Child issue: #35.
+- [x] P5.4 Add CLI review commands. Child issue: #36.
+- [x] P5.5 Document QA workflow. Child issue: #37.
 
-Status: planned.
+Status: complete.
 
 ## Phase 6: Batch Corpus Pipeline
 

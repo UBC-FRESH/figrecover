@@ -7,6 +7,12 @@ from pathlib import Path
 from figrecover.models import DigitizeResult
 
 
+def read_result_json(path: Path) -> DigitizeResult:
+    """Read a digitization result from a JSON file."""
+
+    return DigitizeResult.model_validate_json(Path(path).read_text(encoding="utf-8"))
+
+
 def write_result_json(result: DigitizeResult, path: Path) -> Path:
     """Write a digitization result, including metadata and diagnostics, as JSON."""
 
@@ -33,4 +39,4 @@ def write_result(result: DigitizeResult, path: Path) -> Path:
     return write_points_csv(result, path)
 
 
-__all__ = ["write_points_csv", "write_result", "write_result_json"]
+__all__ = ["read_result_json", "write_points_csv", "write_result", "write_result_json"]

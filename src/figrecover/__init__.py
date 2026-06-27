@@ -14,7 +14,9 @@ from figrecover.models import (
     SeriesResult,
     SeriesSpec,
 )
+from figrecover.qa import FigureQualityMetrics, OverlayArtifact
 from figrecover.records import BoundingBox, FigureCandidate, RenderedPage, SourceDocument
+from figrecover.review import ReviewEntry, ReviewManifest
 from figrecover.vlm import ChartMetadataProposal, ChartTriageRequest, ChartTriageResult
 
 __all__ = [
@@ -26,7 +28,11 @@ __all__ = [
     "DigitizeSpec",
     "FigureCandidate",
     "FigureManifest",
+    "FigureQualityMetrics",
+    "OverlayArtifact",
     "RenderedPage",
+    "ReviewEntry",
+    "ReviewManifest",
     "SeriesResult",
     "SeriesSpec",
     "SourceDocument",

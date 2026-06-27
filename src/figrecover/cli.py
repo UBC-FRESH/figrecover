@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Annotated
 
@@ -11,15 +12,19 @@ from rich.table import Table
 from figrecover.calibration import Calibration
 from figrecover.digitize import digitize_image
 from figrecover.documents import crop_figure_candidates, render_pdf_pages
-from figrecover.io import write_result
+from figrecover.io import read_result_json, write_points_csv, write_result
 from figrecover.manifest import FigureManifest
 from figrecover.models import DigitizeSpec, SeriesSpec
+from figrecover.qa import compute_quality_metrics, render_overlay, write_quality_metrics
+from figrecover.review import ReviewEntry, ReviewManifest
 
 app = typer.Typer(help="Recover approximate source tables from calibrated figure images.")
 pdf_app = typer.Typer(help="Render PDF pages for figure recovery workflows.")
 figures_app = typer.Typer(help="List and crop figure candidate manifests.")
+review_app = typer.Typer(help="Generate and summarize human review artifacts.")
 app.add_typer(pdf_app, name="pdf")
 app.add_typer(figures_app, name="figures")
+app.add_typer(review_app, name="review")
 console = Console()
 
 
@@ -207,6 +212,152 @@ def crop_figures_command(
         "out_manifest": written_manifest,
         "candidate_count": len(cropped),
         "candidates": [candidate.model_dump(mode="json") for candidate in cropped],
+    }
+    console.print(json.dumps(payload, indent=2))
+
+
+@review_app.command(name="bundle")
+def review_bundle_command(
+    results: Annotated[
+        list[Path],
+        typer.Argument(
+            exists=True,
+            readable=True,
+            help="DigitizeResult JSON files produced by figrecover.",
+        ),
+    ],
+    out_dir: Annotated[Path, typer.Option(help="Output directory for review artifacts.")],
+    manifest: Annotated[
+        Path | None,
+        typer.Option(help="Optional review manifest JSONL path. Defaults under out-dir."),
+    ] = None,
+    reviewer: Annotated[
+        str | None, typer.Option(help="Reviewer name or identifier recorded in entries.")
+    ] = None,
+) -> None:
+    """Generate overlays, metrics, tables, and a review manifest."""
+
+    overlay_dir = out_dir / "overlays"
+    metrics_dir = out_dir / "metrics"
+    table_dir = out_dir / "tables"
+    manifest_path = manifest or out_dir / "review.jsonl"
+    entries: list[ReviewEntry] = []
+    for result_path in results:
+        result = read_result_json(result_path)
+        stem = result_path.stem
+        overlay_path = render_overlay(result, overlay_dir / f"{stem}-overlay.png").path
+        metrics = compute_quality_metrics(result)
+        metrics_path = write_quality_metrics(metrics, metrics_dir / f"{stem}-metrics.json")
+        table_path = write_points_csv(
+            result,
+            table_dir / f"{stem}.csv",
+            include_provenance=True,
+        )
+        entries.append(
+            ReviewEntry(
+                review_id=stem,
+                figure_id=result.spec.source_figure_id,
+                extraction_run_id=result.spec.image_id,
+                image_path=result.image_path,
+                overlay_path=overlay_path,
+                table_path=table_path,
+                status="needs_review",
+                reviewer=reviewer,
+                metrics=metrics,
+                diagnostics=result.diagnostics,
+                metadata={
+                    "result_json": str(result_path),
+                    "metrics_path": str(metrics_path),
+                    "review_priority": metrics.review_priority,
+                },
+            )
+        )
+    ReviewManifest.from_entries(entries).write_jsonl(manifest_path)
+    payload = {
+        "result_count": len(results),
+        "out_dir": str(out_dir),
+        "manifest": str(manifest_path),
+        "entries": [entry.model_dump(mode="json") for entry in entries],
+    }
+    console.print(json.dumps(payload, indent=2))
+
+
+@review_app.command(name="summarize")
+def review_summarize_command(
+    manifest: Annotated[
+        Path, typer.Argument(exists=True, readable=True, help="Review manifest JSONL path.")
+    ],
+    json_output: Annotated[
+        bool, typer.Option("--json", help="Emit JSON instead of a table.")
+    ] = False,
+) -> None:
+    """Summarize review statuses and low-confidence entries."""
+
+    review_manifest = ReviewManifest.read_jsonl(manifest)
+    low_confidence = [
+        entry
+        for entry in review_manifest.entries
+        if entry.metrics is not None
+        and (
+            entry.metrics.review_priority in {"medium", "high"}
+            or entry.metrics.mean_confidence < 0.75
+        )
+    ]
+    payload = {
+        "manifest": str(manifest),
+        **review_manifest.summary(),
+        "low_confidence_count": len(low_confidence),
+        "low_confidence_review_ids": [entry.review_id for entry in low_confidence],
+    }
+    if json_output:
+        console.print(json.dumps(payload, indent=2))
+        return
+
+    table = Table(title=f"Review summary: {manifest}")
+    table.add_column("status")
+    table.add_column("count", justify="right")
+    for status, count in payload["status_counts"].items():  # type: ignore[union-attr]
+        table.add_row(str(status), str(count))
+    table.add_row("low_confidence", str(len(low_confidence)))
+    console.print(table)
+
+
+@review_app.command(name="export-accepted")
+def review_export_accepted_command(
+    manifest: Annotated[
+        Path, typer.Argument(exists=True, readable=True, help="Review manifest JSONL path.")
+    ],
+    out_dir: Annotated[Path, typer.Option(help="Output directory for accepted tables.")],
+) -> None:
+    """Copy accepted review tables into a downstream export directory."""
+
+    review_manifest = ReviewManifest.read_jsonl(manifest)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    exported: list[dict[str, str]] = []
+    skipped: list[dict[str, str]] = []
+    for entry in review_manifest.accepted():
+        source = entry.table_path
+        if (
+            entry.status == "manually_corrected"
+            and entry.correction is not None
+            and entry.correction.corrected_table_path is not None
+        ):
+            source = entry.correction.corrected_table_path
+        if source is None or not source.exists():
+            skipped.append({"review_id": entry.review_id, "reason": "missing_table_path"})
+            continue
+        target = out_dir / f"{entry.review_id}{source.suffix}"
+        shutil.copy2(source, target)
+        exported.append(
+            {"review_id": entry.review_id, "source": str(source), "target": str(target)}
+        )
+    payload = {
+        "manifest": str(manifest),
+        "out_dir": str(out_dir),
+        "exported_count": len(exported),
+        "skipped_count": len(skipped),
+        "exported": exported,
+        "skipped": skipped,
     }
     console.print(json.dumps(payload, indent=2))
 
