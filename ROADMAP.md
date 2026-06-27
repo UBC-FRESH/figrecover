@@ -27,27 +27,28 @@ GitHub parent issue: #6
 
 Goal: decide package boundaries before adding more features.
 
-- [x] P1.1 Survey reusable open software. Child issue: TBD.
-- [x] P1.2 Define pipeline architecture. Child issue: TBD.
-- [x] P1.3 Define data/provenance contract. Child issue: TBD.
-- [x] P1.4 Record architecture contract and Phase 2 inputs. Child issue: TBD.
+- [x] P1.1 Survey reusable open software. Child issue: #9.
+- [x] P1.2 Define pipeline architecture. Child issue: #10.
+- [x] P1.3 Define data/provenance contract. Child issue: #8.
+- [x] P1.4 Record architecture contract and Phase 2 inputs. Child issue: #11.
 
-Status: complete locally; child issue sync pending if Phase 1 is reopened for
-formal issue closeout.
+Status: complete.
 
 ## Phase 2: Core Records, Calibration, And Extraction API
 
 GitHub parent issue: #7
 
+Active branch: `feature/p2-core-records-calibration-extraction-api`
+
 Goal: build the durable Python API for calibrated image-level extraction.
 
-- [ ] P2.1 Stabilize record model. Child issue: TBD.
-- [ ] P2.2 Implement calibrated extraction core. Child issue: TBD.
-- [ ] P2.3 Add extraction diagnostics. Child issue: TBD.
-- [ ] P2.4 Add focused synthetic tests. Child issue: TBD.
-- [ ] P2.5 Add API docstrings and first Sphinx reference pages. Child issue: TBD.
+- [ ] P2.1 Stabilize record model. Child issue: #14.
+- [ ] P2.2 Implement calibrated extraction core. Child issue: #12.
+- [ ] P2.3 Add extraction diagnostics. Child issue: #13.
+- [ ] P2.4 Add focused synthetic tests. Child issue: #15.
+- [ ] P2.5 Add API docstrings and first Sphinx reference pages. Child issue: #16.
 
-Status: planned.
+Status: active.
 
 ## Phase 3: Document Ingestion And Figure Cropping
 
