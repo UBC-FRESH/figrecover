@@ -67,6 +67,8 @@ Risks to resolve before submission:
 - [x] Sphinx docs are live on GitHub Pages.
 - [x] CI runs on public GitHub-hosted runners.
 - [x] Release workflow supports TestPyPI and PyPI trusted publishing.
+- [x] v1.0.0 release-candidate and archive plan exists:
+  `planning/v1-release-archive-plan.md`.
 - [ ] v1.0.0 release candidate is available.
 - [ ] v1.0.0 release is archived with DOI.
 
@@ -136,6 +138,8 @@ Pre-submission gaps:
 - [ ] Decide whether TFL 6 case-study outputs are docs-only, test fixtures, or
   ignored local evaluation artifacts.
 - [ ] Confirm clean install from v1.0.0 wheel and source distribution.
+- [ ] Confirm release-candidate workflow follows
+  `planning/v1-release-archive-plan.md`.
 
 ## Submission Metadata To Prepare
 

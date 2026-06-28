@@ -85,3 +85,20 @@ Version Policy
 The Phase 8 alpha target is ``0.1.0a1``. Later alpha releases should increment
 the alpha suffix. Stable ``1.0.0`` release work is reserved for Phase 9
 publication and peer-review readiness.
+
+v1.0.0 Release Candidate And Archive
+------------------------------------
+
+The stable ``1.0.0`` release must be handled as a reviewed release, not as a
+routine alpha increment. Phase 9 keeps the detailed release-candidate and
+archive plan in ``planning/v1-release-archive-plan.md`` until the package is
+ready to cut a release candidate.
+
+The first release candidate should not be tagged until the v1.0.0 readiness
+gaps are closed or explicitly deferred, public APIs and deprecation policy are
+documented, examples are confirmed public-safe, release checks pass, and the
+archive/DOI path is configured. The final ``v1.0.0`` release should be
+published only after release-candidate validation and maintainer approval.
+
+No private PDFs, generated private crops, recovered private tables, prompt
+logs, or unapproved case-study artifacts may be included in release archives.

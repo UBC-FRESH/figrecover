@@ -112,3 +112,6 @@ This is the append-only project narrative for `figrecover`.
 - Added pyOpenSci review-readiness materials: statement of need, citation and
   support guidance, alpha API-stability guidance, citation metadata, and code
   of conduct.
+- Added the P9.3 v1.0.0 release-candidate and archive plan, documenting
+  release gates, verification commands, TestPyPI/PyPI sequence, archive/DOI
+  expectations, and private-data hygiene before any stable release is cut.

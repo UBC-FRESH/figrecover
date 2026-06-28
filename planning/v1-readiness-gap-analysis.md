@@ -123,10 +123,12 @@ Current status:
 
 - Alpha release process works through GitHub Actions, TestPyPI, and PyPI.
 - GitHub prerelease artifacts exist.
+- `planning/v1-release-archive-plan.md` defines the intended v1.0.0 release
+  candidate, final release, and archive/DOI path.
 
 v1.0.0 gaps:
 
-- Define release candidate process.
+- Execute the release candidate process after readiness gates are satisfied.
 - Confirm archive/DOI integration.
 - Verify final v1.0.0 install from PyPI and archive.
 - Record release and archive links in roadmap/changelog/docs.
@@ -166,4 +168,5 @@ v1.0.0 gaps:
 - [ ] Build the TFL 6 case-study workflow under ignored `tmp/tfl6_case_study/`
   before selecting publication artifacts.
 - [ ] Define API stability/deprecation policy.
+- [x] Define v1.0.0 release-candidate and archive plan.
 - [ ] Track each v1.0.0 gap as linked GitHub issues before submission.
