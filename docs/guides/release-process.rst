@@ -58,6 +58,27 @@ Publishing jobs use GitHub environments named ``testpypi`` and ``pypi`` so the
 repository can require maintainer approval and trusted-publishing configuration
 before upload.
 
+Trusted Publishing Setup
+------------------------
+
+TestPyPI and PyPI each need a trusted publisher entry before the release
+workflow can upload packages without an API token.
+
+Use these claims:
+
+* repository owner: ``UBC-FRESH``;
+* repository name: ``figrecover``;
+* workflow filename: ``release.yml``;
+* TestPyPI environment: ``testpypi``;
+* PyPI environment: ``pypi``.
+
+The TestPyPI trusted-publishing failure observed during the first alpha attempt
+reported this subject claim:
+
+.. code-block:: text
+
+   repo:UBC-FRESH/figrecover:environment:testpypi
+
 Version Policy
 --------------
 

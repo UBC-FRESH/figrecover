@@ -156,6 +156,13 @@ Goal: make the package usable by external power users.
 
 Status: active.
 
+Pull request: #59.
+
+GitHub prerelease: `v0.1.0a1`.
+
+PyPI status: blocked pending trusted-publisher configuration for the release
+workflow.
+
 ## Phase 9: Scholarly Publication And Peer Review
 
 GitHub parent issue: TBD

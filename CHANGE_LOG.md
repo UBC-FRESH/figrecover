@@ -94,3 +94,6 @@ This is the append-only project narrative for `figrecover`.
   process documentation for TestPyPI/PyPI alpha publishing.
 - Prepared `0.1.0a1` alpha release materials with version bump, README scope
   refresh, release notes, and explicit limitation/private-data guidance.
+- Merged Phase 8 PR #59 and published the GitHub prerelease `v0.1.0a1` with
+  built wheel and source distribution artifacts. TestPyPI/PyPI upload is blocked
+  until trusted publishing is configured for the release workflow.
