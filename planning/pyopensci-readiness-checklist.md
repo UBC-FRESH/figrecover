@@ -93,6 +93,8 @@ Pre-submission doc gaps:
 - [ ] Add citation instructions.
 - [ ] Add maintenance/support expectations.
 - [ ] Add explicit v1.0.0 API stability/deprecation policy.
+- [ ] Add TFL 6 case-study documentation if source provenance and reuse rights
+  are confirmed.
 - [ ] Add any public benchmark or evaluation notes approved for release.
 
 ## README And Community Files
@@ -132,6 +134,8 @@ Pre-submission gaps:
 
 - [ ] Define v1.0.0 expected coverage and test-risk boundaries.
 - [ ] Add public benchmark/evaluation tests only if public-safe and stable.
+- [ ] Decide whether TFL 6 case-study outputs are docs-only, test fixtures, or
+  ignored local evaluation artifacts.
 - [ ] Confirm clean install from v1.0.0 wheel and source distribution.
 
 ## Submission Metadata To Prepare

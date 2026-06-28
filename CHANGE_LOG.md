@@ -106,3 +106,6 @@ This is the append-only project narrative for `figrecover`.
 - Completed the initial P9.1 publication readiness and scope scan, recording
   source-backed pyOpenSci/JOSS review-path requirements and v1.0.0 readiness
   gaps while keeping submission gated on later maturity.
+- Added a TFL 6 case-study publication plan to use the local management-plan
+  PDF as the preferred realistic deployment target for Sphinx docs and JOSS
+  results, gated on provenance, reuse rights, and public-data hygiene.

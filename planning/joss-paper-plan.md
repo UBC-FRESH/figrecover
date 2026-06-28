@@ -109,9 +109,32 @@ Potential figures:
 - QA overlay example from a synthetic chart;
 - corpus artifact layout schematic;
 - review-gated export workflow.
+- selected TFL 6 case-study artifacts only after source provenance and reuse
+  rights are confirmed.
 
 Do not use private forestry PDFs, private crops, private extracted values, or
 generated artifacts derived from unpublished documents.
+
+## Primary Results Case Study
+
+The preferred JOSS results narrative should use the TFL 6 Management Plan PDF
+as the primary realistic deployment case study, subject to the publication gate
+in `planning/tfl6-case-study-publication-plan.md`.
+
+The case study should report auditable workflow outcomes rather than only
+successful examples:
+
+- relevant figures inventoried;
+- figure crops produced;
+- chart classes encountered;
+- deterministic extraction successes;
+- manual calibration/review requirements;
+- unsupported or partial-support cases;
+- QA diagnostics and review decisions;
+- publication-safe recovered data summaries.
+
+The paper should frame this as a realistic technical-document deployment, not
+as a claim of complete automated recovery from arbitrary PDFs.
 
 ## References To Prepare
 
@@ -126,6 +149,8 @@ Reference groups to collect later:
 ## Submission Path
 
 - [ ] Complete pyOpenSci readiness and review first.
+- [ ] Complete the TFL 6 publication gate before using TFL 6 artifacts in the
+  paper.
 - [ ] Add paper files only when the package is close to or past v1.0.0 review
   readiness.
 - [ ] Build/check the paper locally with recommended JOSS tooling.

@@ -67,6 +67,8 @@ v1.0.0 expectation:
 - Strengthen diagnostics for unsupported and low-confidence cases.
 - Add public-safe evaluation cases beyond trivial synthetic examples if
   feasible.
+- Use the TFL 6 Management Plan PDF as the preferred realistic deployment case
+  study if provenance and reuse rights allow publication of derived artifacts.
 - Avoid claiming arbitrary PDF-to-table automation.
 
 ## Documentation Completeness
@@ -96,6 +98,8 @@ v1.0.0 gaps:
 - Decide whether synthetic examples are sufficient for review.
 - Identify public-domain or permissively reusable technical figures if stronger
   evaluation evidence is needed.
+- Complete the TFL 6 case-study publication gate and decide which outputs can
+  become tracked docs/JOSS artifacts.
 - Keep private FEMIC/FHOPS documents out of public examples.
 
 ## Citation Metadata
@@ -157,5 +161,7 @@ v1.0.0 gaps:
 - [ ] Add citation metadata plan.
 - [ ] Add statement-of-need documentation.
 - [ ] Decide public benchmark/evaluation evidence strategy.
+- [ ] Build the TFL 6 case-study workflow under ignored `tmp/tfl6_case_study/`
+  before selecting publication artifacts.
 - [ ] Define API stability/deprecation policy.
 - [ ] Track each v1.0.0 gap as linked GitHub issues before submission.
