@@ -162,7 +162,8 @@ the paper, paper figures, docs, release archives, or review materials.
 - [x] Preliminary `paper/paper.bib` created.
 - [x] Alpha software availability section added with GitHub, docs, PyPI, and
       prerelease links.
-- [ ] Author list and affiliations finalized.
+- [x] Preliminary author, affiliation, and corresponding email added.
+- [ ] Confirm final author list, ORCIDs, and affiliations before submission.
 - [ ] Replace alpha software citation with v1.0.0 release and archive DOI.
 - [ ] TFL 6 case-study evidence added only after publication gate.
 - [x] Paper render workflow added for ignored local PDF/HTML artifacts.
