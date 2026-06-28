@@ -115,3 +115,7 @@ This is the append-only project narrative for `figrecover`.
 - Added the P9.3 v1.0.0 release-candidate and archive plan, documenting
   release gates, verification commands, TestPyPI/PyPI sequence, archive/DOI
   expectations, and private-data hygiene before any stable release is cut.
+- Added the P9.4 pyOpenSci submission and review-response plan, defining
+  submission gates, metadata, issue/PR tracking, reviewer-feedback labels,
+  verification expectations, and acceptance/badge handling before any actual
+  review submission is opened.

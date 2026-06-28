@@ -162,6 +162,8 @@ Pre-submission gaps:
 
 ## Review Response Plan
 
+- [x] Define submission and review-response workflow:
+  `planning/pyopensci-submission-response-plan.md`.
 - [ ] Convert reviewer/editor feedback into linked GitHub issues.
 - [ ] Address feedback through PRs with tests/docs when appropriate.
 - [ ] Keep `ROADMAP.md`, `CHANGE_LOG.md`, docs, and release notes synchronized.

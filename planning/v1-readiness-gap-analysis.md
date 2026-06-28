@@ -141,12 +141,14 @@ Current status:
   exist.
 - `CODE_OF_CONDUCT.md` exists.
 - Citation/support docs exist for alpha users.
+- `planning/pyopensci-submission-response-plan.md` defines the intended
+  review-response workflow.
 
 v1.0.0 gaps:
 
 - Confirm maintainer commitment and response expectations.
 - Add or confirm code of conduct if expected.
-- Add support channels and review-response plan.
+- Execute the review-response plan once pyOpenSci review is opened.
 - Ensure issue templates support user bug reports and feature requests well
   enough for public alpha users.
 
@@ -169,4 +171,5 @@ v1.0.0 gaps:
   before selecting publication artifacts.
 - [ ] Define API stability/deprecation policy.
 - [x] Define v1.0.0 release-candidate and archive plan.
+- [x] Define pyOpenSci submission and review-response plan.
 - [ ] Track each v1.0.0 gap as linked GitHub issues before submission.
