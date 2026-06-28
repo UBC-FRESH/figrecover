@@ -2,6 +2,18 @@
 
 This is the append-only project narrative for `figrecover`.
 
+## 2026-06-28
+
+- Added `planning/tfl6-mp11-deployment-feedback.md` as a public-safe,
+  action-oriented summary of lessons from the FEMIC TFL6 MP11 figure-extraction
+  deployment.
+- Recorded the deployment evidence surface of `10` comparison-accepted figures,
+  `14` planning-reviewed figures, and `0` model-input-accepted figures.
+- Mapped deployment lessons into proposed v1 backlog items for calibration
+  records, deterministic chart-family extractors, validation-strength fields,
+  review manifests, overlay contact sheets, corpus summaries, and artifact
+  hygiene.
+
 ## 2026-06-27
 
 - Created the initial calibrated image-crop digitization scaffold with linear
