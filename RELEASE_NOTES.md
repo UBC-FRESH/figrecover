@@ -2,7 +2,7 @@
 
 ## 0.1.0a1
 
-Planned public-alpha release.
+Public-alpha release.
 
 ### Added
 
