@@ -99,3 +99,18 @@ Export accepted review tables:
 
    figrecover corpus export tmp/review/review.jsonl \
       --out-dir tmp/corpus/tables/accepted
+
+Integration Exports
+-------------------
+
+FEMIC, FHOPS, and generic modelling exports are currently Python API workflows
+rather than CLI commands. See :doc:`../guides/integrations` for the public
+export contract.
+
+Limitations
+-----------
+
+The CLI does not infer arbitrary chart calibration from a PDF. It exposes
+deterministic preparation, extraction, review, and corpus commands. Keep private
+PDFs, crops, overlays, manifests, and recovered tables under ignored output
+directories such as ``tmp/`` unless explicitly sanitized.

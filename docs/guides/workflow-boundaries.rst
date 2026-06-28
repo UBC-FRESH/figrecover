@@ -54,10 +54,11 @@ Current diagnostic codes include:
 * ``calibration_plot_bounds_missing`` when extraction falls back to the full
   image because no plot-frame bounds were supplied.
 
-Planned optional layers:
+Optional layers:
 
 * heavier document parser adapters for candidate figures and captions;
 * batch corpus orchestration with resumable workers;
+* local VLM chart metadata proposals;
 * FEMIC/FHOPS export adapters.
 
 QA overlays, quality metrics, and review manifests are now available for

@@ -79,3 +79,18 @@ This is the append-only project narrative for `figrecover`.
 - Closed Phase 7 with public-safe integration boundaries, review-gated
   modelling exports, passing tests/docs/package checks, and Phase 8 public alpha
   inputs recorded.
+- Launched Phase 8 with GitHub parent and child issues for full public-alpha
+  docs, publication-safe examples, CI, release workflow, and `0.1.0a1`
+  publication.
+- Added public-alpha documentation pages for manual calibrated extraction and
+  limitations, refreshed quickstart/navigation/CLI docs, and corrected stale
+  workflow-boundary wording now that corpus, VLM, and integration layers exist.
+- Added publication-safe examples for synthetic chart extraction, synthetic PDF
+  corpus rendering, and mocked VLM metadata parsing, with Sphinx example docs
+  and smoke-test coverage.
+- Added public CI for Ruff, pytest, Sphinx, package build, and Twine metadata
+  checks across Python 3.11 and 3.12, plus development-check documentation.
+- Added a manually triggered, environment-gated release workflow and release
+  process documentation for TestPyPI/PyPI alpha publishing.
+- Prepared `0.1.0a1` alpha release materials with version bump, README scope
+  refresh, release notes, and explicit limitation/private-data guidance.

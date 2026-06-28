@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "figrecover"
-version = "0.1.0a0"
+version = "0.1.0a1"
 description = "Recover approximate tabular data from scientific and professional figures."
 readme = "README.md"
 requires-python = ">=3.11"
