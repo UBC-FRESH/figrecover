@@ -126,6 +126,17 @@ The paper should be backed by a concise evidence matrix before drafting:
 | pyOpenSci review outcome | external review issue later | public after review | package quality context |
 | v1.0.0 archive DOI | archive later | public after release | citable reviewed software |
 
+## Exemplar Review
+
+- [x] Downloaded and reviewed representative published JOSS papers under
+      ignored `tmp/joss_exemplars/`.
+- [x] Recorded structure and tone findings in
+      `planning/joss-exemplar-paper-review.md`.
+- [x] Revised the draft toward a published-JOSS-paper pattern: Summary,
+      Statement of need, State of the field, Software design, Functionality,
+      Research impact statement, Applications and limitations, AI usage
+      disclosure, Acknowledgements, and References.
+
 ## Paper Build And Review Workflow
 
 When paper files exist:

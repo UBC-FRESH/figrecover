@@ -17,17 +17,6 @@ date: 28 June 2026
 bibliography: paper.bib
 ---
 
-<!--
-Draft status: preliminary manuscript skeleton.
-
-Before submission:
-- replace lab-level author placeholder with individual authors and affiliations;
-- add ORCID identifiers where appropriate;
-- update release/version/DOI fields after v1.0.0 archival release;
-- replace TFL 6 placeholders only after the publication gate is complete;
-- confirm references and wording against the final pyOpenSci/JOSS path.
--->
-
 # Summary
 
 `figrecover` is an open-source Python package for recovering approximate
@@ -63,10 +52,11 @@ WebPlotDigitizer provide interactive point extraction from chart images
 [@rohatgi2024webplotdigitizer]. Scientific Python libraries provide numerical
 arrays, tables, image processing, and computer-vision primitives
 [@harris2020array; @mckinney2010data; @vanderwalt2014scikitimage; @bradski2000opencv].
-PDF and document-analysis systems can render pages and identify document
-structure. Vision-language models can help describe chart types, read labels,
-and propose legends, but current general-purpose models should not be treated
-as authoritative sources of pixel-accurate numeric data.
+PDF and document-analysis systems can preserve document layout and support
+annotation or extraction workflows [@stahl2025peat]. Vision-language models
+can help describe chart types, read labels, and propose legends, but current
+general-purpose models should not be treated as authoritative sources of
+pixel-accurate numeric data.
 
 `figrecover` fills a workflow gap between these categories. It provides a
 Python-native, provenance-preserving package for calibrated figure recovery
@@ -122,26 +112,63 @@ software easier to test with synthetic fixtures, easier to integrate into
 larger systems, and easier to audit when recovered values are used as research
 inputs.
 
+# Functionality
+
+`figrecover` provides user-facing commands and Python APIs for several common
+figure-recovery tasks:
+
+- rendering PDF pages and recording page provenance;
+- creating and loading figure-candidate manifests;
+- defining manual chart calibrations for linear and log axes;
+- extracting line, scatter, bar, and simple filled-area series from prepared
+  crops;
+- exporting recovered series as JSON, CSV, or modelling-oriented long tables;
+- rendering QA overlays that compare recovered data with the source crop;
+- recording accepted, rejected, or needs-review decisions in review manifests;
+- processing larger document collections through a resumable corpus artifact
+  layout;
+- storing optional VLM chart descriptions, legend proposals, and calibration
+  hints as auditable proposals.
+
+These features are intended to keep numerical recovery, provenance, and review
+state together. A recovered table can therefore be traced back to a source
+document, page, crop, calibration frame, extractor, diagnostic record, and
+review decision.
+
 # Research impact statement
 
-`figrecover` is currently public alpha research software. Its immediate
-research value is the creation of an open, testable workflow for recovering
-figure-derived approximate data with provenance and review metadata. The
-package already includes synthetic examples, continuous integration,
-documentation, packaging, and public release infrastructure. It is being
-prepared for pyOpenSci review and later JOSS submission so that package
-quality, documentation, maintenance, and scholarly relevance can be reviewed in
-public.
+`figrecover` supports research workflows where previously published figures are
+evidence but the original source tables are unavailable. By making calibration,
+diagnostics, overlays, and review decisions explicit, the package helps users
+separate accepted recovered values from unsupported or ambiguous cases. This is
+important for modelling workflows that need to cite the source document,
+explain how derived values were produced, and revisit those decisions later.
+
+The package is especially relevant to technical-document corpora in which
+figures encode scenario trajectories, historical conditions, cost curves,
+productivity relationships, or other model inputs. Forestry and operations
+modelling provide motivating examples, but the workflow is general: identify
+candidate figures, recover the portion that is technically supportable, and
+carry provenance and uncertainty forward with the extracted table.
+
+# Applications and limitations
 
 The primary planned deployment case study is a public-safe review of figures
-from a TFL 6 Management Plan PDF. That case study will report the number of
-relevant figures inventoried, figure crops produced, supported and unsupported
-chart classes encountered, deterministic extraction successes, manual review
-requirements, diagnostics, and accepted recovered-table summaries. These
-results are intentionally not included in this draft until document provenance
-and reuse permissions are resolved. The goal of the case study is to show a
-realistic technical-document deployment, including limitations, rather than to
-claim complete automated recovery from arbitrary PDFs.
+from a TFL 6 Management Plan PDF. That case study is expected to report
+relevant figures inventoried, crops produced, chart classes encountered,
+deterministic extraction successes, manual review requirements, diagnostics,
+and accepted recovered-table summaries. These results are not included in this
+draft until document provenance and reuse permissions are resolved.
+
+`figrecover` does not recover exact hidden source tables, and it is not a
+general solution for arbitrary figures. Current deterministic extractors are
+most suitable for prepared chart crops with visible axes, calibratable scales,
+and graphical marks that can be isolated by colour or image structure. Complex
+stacked charts, maps, dense scans, ambiguous legends, and low-quality raster
+documents may require manual review, custom extractors, or may remain
+unsupported. The package is therefore best understood as auditable recovery
+software rather than fully automatic chart understanding software.
+
 
 # AI usage disclosure
 
