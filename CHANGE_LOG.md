@@ -97,3 +97,6 @@ This is the append-only project narrative for `figrecover`.
 - Merged Phase 8 PR #59 and published the GitHub prerelease `v0.1.0a1` with
   built wheel and source distribution artifacts. TestPyPI/PyPI upload is blocked
   until trusted publishing is configured for the release workflow.
+- Published `figrecover==0.1.0a1` to TestPyPI and PyPI through the trusted
+  publishing release workflow, verified real PyPI installation in a fresh
+  environment, and completed Phase 8.

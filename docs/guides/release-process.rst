@@ -72,8 +72,8 @@ Use these claims:
 * TestPyPI environment: ``testpypi``;
 * PyPI environment: ``pypi``.
 
-The TestPyPI trusted-publishing failure observed during the first alpha attempt
-reported this subject claim:
+The first alpha was published successfully after these publishers were
+configured. The TestPyPI subject claim used during setup was:
 
 .. code-block:: text
 

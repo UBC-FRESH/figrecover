@@ -152,16 +152,17 @@ Goal: make the package usable by external power users.
 - [x] P8.2 Add examples. Child issue: #55.
 - [x] P8.3 Add CI and release checks. Child issue: #56.
 - [x] P8.4 Add release workflow. Child issue: #57.
-- [ ] P8.5 Publish alpha. Child issue: #58.
+- [x] P8.5 Publish alpha. Child issue: #58.
 
-Status: active.
+Status: complete.
 
 Pull request: #59.
 
 GitHub prerelease: `v0.1.0a1`.
 
-PyPI status: blocked pending trusted-publisher configuration for the release
-workflow.
+TestPyPI release: `figrecover==0.1.0a1`.
+
+PyPI release: `figrecover==0.1.0a1`.
 
 ## Phase 9: Scholarly Publication And Peer Review
 
