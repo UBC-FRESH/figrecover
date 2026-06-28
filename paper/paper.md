@@ -1,5 +1,6 @@
 ---
 title: "figrecover: Auditable recovery of approximate source tables from published technical figures"
+author: "Gregory Paradis (FRESH Lab, University of British Columbia; gregory.paradis@ubc.ca)"
 tags:
   - Python
   - chart digitization
@@ -8,10 +9,12 @@ tags:
   - scientific computing
   - provenance
 authors:
-  - name: UBC FRESH Lab
+  - name: Gregory Paradis
     affiliation: "1"
+    email: gregory.paradis@ubc.ca
+    corresponding: true
 affiliations:
-  - name: University of British Columbia, FRESH Lab
+  - name: FRESH Lab, University of British Columbia
     index: 1
 date: 28 June 2026
 bibliography: paper.bib
@@ -201,8 +204,8 @@ correctness.
 
 # Acknowledgements
 
-This work is developed by the UBC FRESH Lab. Additional funding,
-collaborator, institutional, and case-study acknowledgements should be added
-before submission.
+This work is developed in the UBC FRESH Lab. Additional funding, collaborator,
+institutional, and case-study acknowledgements should be added before
+submission.
 
 # References

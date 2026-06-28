@@ -137,3 +137,7 @@ This is the append-only project narrative for `figrecover`.
 - Added software availability and package citation details to the JOSS draft,
   including GitHub repository, documentation, PyPI, and current alpha release
   links, with v1.0.0 archive DOI replacement still gated.
+- Added an opt-in JOSS paper rendering helper and `paper` optional dependency
+  for local PDF/HTML draft artifacts under ignored `tmp/joss_render/`.
+- Added Gregory Paradis as preliminary corresponding author for the JOSS draft,
+  with FRESH Lab/University of British Columbia affiliation and email metadata.
