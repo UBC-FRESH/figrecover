@@ -119,3 +119,6 @@ This is the append-only project narrative for `figrecover`.
   submission gates, metadata, issue/PR tracking, reviewer-feedback labels,
   verification expectations, and acceptance/badge handling before any actual
   review submission is opened.
+- Added the P9.5 JOSS paper-readiness checklist, defining manuscript gates,
+  section-level readiness, evidence matrix, paper build/review workflow, and
+  private-data constraints before repository paper files are created.

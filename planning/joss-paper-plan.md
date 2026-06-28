@@ -33,7 +33,8 @@ CLI details, examples, and workflow instructions.
 ## Repository Paper Files
 
 Do not create paper files during the Phase 9 launch tranche. When the project
-is ready for paper drafting, add:
+is ready for paper drafting, use
+`planning/joss-paper-readiness-checklist.md` as the paper gate and add:
 
 - `paper/paper.md`
 - `paper/paper.bib`
@@ -149,6 +150,8 @@ Reference groups to collect later:
 ## Submission Path
 
 - [ ] Complete pyOpenSci readiness and review first.
+- [x] Define paper-readiness checklist and manuscript workflow:
+  `planning/joss-paper-readiness-checklist.md`.
 - [ ] Complete the TFL 6 publication gate before using TFL 6 artifacts in the
   paper.
 - [ ] Add paper files only when the package is close to or past v1.0.0 review
