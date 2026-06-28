@@ -100,3 +100,6 @@ This is the append-only project narrative for `figrecover`.
 - Published `figrecover==0.1.0a1` to TestPyPI and PyPI through the trusted
   publishing release workflow, verified real PyPI installation in a fresh
   environment, and completed Phase 8.
+- Launched Phase 9 with GitHub parent and child issues for pyOpenSci/JOSS
+  scholarly publication readiness, v1.0.0 gap analysis, review materials,
+  release/archive planning, paper planning, and publication closeout.
