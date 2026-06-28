@@ -23,6 +23,23 @@ automatic PDF-to-table pipeline or precision guarantees for arbitrary charts.
 Recovered values are approximate and should be reviewed before they become
 scientific or operational model inputs.
 
+Docs: https://ubc-fresh.github.io/figrecover/
+
+PyPI: https://pypi.org/project/figrecover/
+
+## Statement Of Need
+
+Scientific and professional technical documents often publish figures without
+the original source tables used to generate them. Those figures can contain
+important quantitative evidence for modelling, review, meta-analysis, or
+historical reconstruction, but manual digitization is slow, inconsistent, and
+hard to audit.
+
+`figrecover` provides an open Python workflow for recovering approximate
+tabular data from chart images while preserving provenance, calibration
+decisions, diagnostics, and review status. It is built for auditable recovery
+workflows, not unsupported numeric guesses or silent automation.
+
 ## Current Alpha Scope
 
 Supported in `0.1.0a1`:
@@ -173,3 +190,13 @@ Do not commit private PDFs, rendered pages, crops, overlays, review manifests,
 prompt logs, VLM responses, generated corpus outputs, or recovered private
 tables. Keep them under ignored local paths such as `tmp/` unless explicitly
 sanitized and approved for public release.
+
+## Citation And Support
+
+Citation metadata is available in `CITATION.cff`. Until a reviewed paper and
+DOI exist, cite the software release and version used in your work.
+
+Use GitHub issues for public bug reports, documentation issues, and feature
+requests. Do not attach private PDFs, prompt logs, review bundles, or recovered
+private tables to public issues; create a synthetic or public-safe reproducer
+instead.

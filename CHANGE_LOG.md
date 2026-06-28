@@ -100,3 +100,31 @@ This is the append-only project narrative for `figrecover`.
 - Published `figrecover==0.1.0a1` to TestPyPI and PyPI through the trusted
   publishing release workflow, verified real PyPI installation in a fresh
   environment, and completed Phase 8.
+- Launched Phase 9 with GitHub parent and child issues for pyOpenSci/JOSS
+  scholarly publication readiness, v1.0.0 gap analysis, review materials,
+  release/archive planning, paper planning, and publication closeout.
+- Completed the initial P9.1 publication readiness and scope scan, recording
+  source-backed pyOpenSci/JOSS review-path requirements and v1.0.0 readiness
+  gaps while keeping submission gated on later maturity.
+- Added a TFL 6 case-study publication plan to use the local management-plan
+  PDF as the preferred realistic deployment target for Sphinx docs and JOSS
+  results, gated on provenance, reuse rights, and public-data hygiene.
+- Added pyOpenSci review-readiness materials: statement of need, citation and
+  support guidance, alpha API-stability guidance, citation metadata, and code
+  of conduct.
+- Added the P9.3 v1.0.0 release-candidate and archive plan, documenting
+  release gates, verification commands, TestPyPI/PyPI sequence, archive/DOI
+  expectations, and private-data hygiene before any stable release is cut.
+- Added the P9.4 pyOpenSci submission and review-response plan, defining
+  submission gates, metadata, issue/PR tracking, reviewer-feedback labels,
+  verification expectations, and acceptance/badge handling before any actual
+  review submission is opened.
+- Added the P9.5 JOSS paper-readiness checklist, defining manuscript gates,
+  section-level readiness, evidence matrix, paper build/review workflow, and
+  private-data constraints before repository paper files are created.
+- Added the P9.6 publication closeout checklist, defining final citation
+  metadata, badges, DOI/link propagation, documentation synchronization,
+  issue/PR closeout, verification, and private-data hygiene requirements.
+- Prepared the Phase 9 launch pull request for merge by clarifying that the
+  merged branch establishes the publication-readiness scaffold while gated
+  v1.0.0 release, pyOpenSci, JOSS, DOI, and final closeout work remain open.
