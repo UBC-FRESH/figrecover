@@ -19,16 +19,16 @@ bibliography: paper.bib
 
 # Summary
 
-`figrecover` is an open-source Python package for recovering approximate
-tabular data from figures in scientific and professional documents when the
-original source tables were not published. The package targets charts embedded
-in technical PDFs, including line plots, scatter plots, bar charts, and simple
-filled-area plots. Its purpose is not to promise exact reconstruction of hidden
-data or fully automatic PDF-to-table conversion. Instead, `figrecover` provides
-an auditable workflow for rendering pages, isolating figure candidates,
-calibrating chart axes, extracting approximate values with deterministic
-methods, and reviewing recovered data before they are used in downstream
-research or operational models.
+`figrecover` is an open-source Python package [@ubcfresh2026figrecover] for
+recovering approximate tabular data from figures in scientific and professional
+documents when the original source tables were not published. The package
+targets charts embedded in technical PDFs, including line plots, scatter
+plots, bar charts, and simple filled-area plots. Its purpose is not to promise
+exact reconstruction of hidden data or fully automatic PDF-to-table
+conversion. Instead, `figrecover` provides an auditable workflow for rendering
+pages, isolating figure candidates, calibrating chart axes, extracting
+approximate values with deterministic methods, and reviewing recovered data
+before they are used in downstream research or operational models.
 
 The package is designed for power users working with document corpora where
 figures contain important quantitative evidence. Example motivating workflows
@@ -36,6 +36,19 @@ include forest-management planning, operations modelling, and historical
 technical-report review. `figrecover` exposes both a Python API and a command
 line interface, making it usable as a standalone recovery tool or as a
 component in larger modelling systems.
+
+# Software availability
+
+The source repository is hosted at
+`https://github.com/UBC-FRESH/figrecover`, and the current documentation is
+published at `https://ubc-fresh.github.io/figrecover/`. The package is
+distributed on PyPI at `https://pypi.org/project/figrecover/`. The current
+public alpha release is `v0.1.0a1`; the corresponding GitHub prerelease is
+available at `https://github.com/UBC-FRESH/figrecover/releases/tag/v0.1.0a1`.
+
+This manuscript draft cites the alpha software release. Before JOSS
+submission, this section and the bibliography should be updated to cite the
+reviewed `v1.0.0` release and its archive DOI.
 
 # Statement of need
 
@@ -95,7 +108,9 @@ models describe source documents, pages, figures, chart metadata, calibration
 frames, recovered series, diagnostics, review decisions, and export outputs.
 Calibration tools map between image pixels and data coordinates for linear and
 log axes. Extraction tools recover line, scatter, bar, and simple area-series
-values from prepared image crops using deterministic image processing.
+values from prepared image crops using deterministic image processing built on
+the Python scientific stack [@harris2020array; @mckinney2010data;
+@vanderwalt2014scikitimage; @bradski2000opencv].
 
 Quality-assurance tools generate overlays, summarize diagnostics, and preserve
 review decisions. Corpus pipeline tools define a reproducible artifact layout

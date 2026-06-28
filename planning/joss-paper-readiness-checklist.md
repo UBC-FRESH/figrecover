@@ -159,8 +159,10 @@ the paper, paper figures, docs, release archives, or review materials.
 
 - [x] Preliminary `paper/paper.md` created.
 - [x] Preliminary `paper/paper.bib` created.
+- [x] Alpha software availability section added with GitHub, docs, PyPI, and
+      prerelease links.
 - [ ] Author list and affiliations finalized.
-- [ ] v1.0.0 release and archive DOI added.
+- [ ] Replace alpha software citation with v1.0.0 release and archive DOI.
 - [ ] TFL 6 case-study evidence added only after publication gate.
 - [ ] Paper build/check workflow added.
 - [ ] JOSS submission timing confirmed.
