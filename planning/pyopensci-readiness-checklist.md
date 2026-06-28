@@ -16,6 +16,17 @@ usability, maintainability, documentation, and scientific workflow fit. JOSS
 should follow through the pyOpenSci/JOSS pathway after pyOpenSci acceptance or
 when the package clearly satisfies that path.
 
+Official source references:
+
+- pyOpenSci author guide:
+  `https://www.pyopensci.org/software-peer-review/how-to/author-guide.html`
+- pyOpenSci package scope:
+  `https://www.pyopensci.org/software-peer-review/about/package-scope.html`
+- pyOpenSci review policies:
+  `https://www.pyopensci.org/software-peer-review/our-process/policies.html`
+- pyOpenSci/JOSS partnership:
+  `https://www.pyopensci.org/software-peer-review/partners/joss.html`
+
 ## Scope Fit
 
 Current fit hypothesis:
@@ -37,6 +48,12 @@ Risks to resolve before submission:
   limitations rather than oversold.
 - Public benchmark examples are currently synthetic; v1.0.0 readiness should
   decide whether additional public-domain technical documents are needed.
+- pyOpenSci guidance says a package should be mature enough for reviewers to
+  evaluate it in its entirety and have APIs that are stable or close to
+  stability before review.
+- pyOpenSci policy expects accepted packages to remain maintained after review;
+  the review-policy page describes a maintenance commitment of at least two
+  years.
 
 ## Package Basics
 
@@ -119,17 +136,18 @@ Pre-submission gaps:
 
 ## Submission Metadata To Prepare
 
-- [ ] Package name.
-- [ ] One-line description.
-- [ ] Repository URL.
-- [ ] Documentation URL.
-- [ ] PyPI URL.
+- [x] Package name: `figrecover`.
+- [x] One-line description: Recover approximate tabular data from scientific
+  and professional figures.
+- [x] Repository URL: `https://github.com/UBC-FRESH/figrecover`.
+- [x] Documentation URL: `https://ubc-fresh.github.io/figrecover/`.
+- [x] PyPI URL: `https://pypi.org/project/figrecover/`.
 - [ ] Version submitted.
 - [ ] Archive/DOI for submitted version.
 - [ ] Submitting author.
 - [ ] Maintainers.
 - [ ] Maintainer availability and response plan.
-- [ ] License.
+- [x] License: MIT.
 - [ ] Scope statement.
 - [ ] Statement of need.
 - [ ] Related packages/tools.

@@ -18,6 +18,10 @@ It is not yet v1.0.0 review-ready. The main gaps are API stability policy,
 broader evaluation evidence, citation/release archival metadata, community
 readiness, and a mature public statement of need.
 
+This conclusion matches pyOpenSci author guidance that packages should be
+mature enough for complete review and have stable or close-to-stable APIs
+before submission.
+
 ## Current Strengths
 
 - Public GitHub repository under `UBC-FRESH/figrecover`.
@@ -149,7 +153,7 @@ v1.0.0 gaps:
 
 ## Recommended Next Work
 
-- [ ] Complete pyOpenSci readiness checklist.
+- [x] Complete initial pyOpenSci/JOSS scope and readiness scan for P9.1.
 - [ ] Add citation metadata plan.
 - [ ] Add statement-of-need documentation.
 - [ ] Decide public benchmark/evaluation evidence strategy.

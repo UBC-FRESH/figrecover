@@ -103,3 +103,6 @@ This is the append-only project narrative for `figrecover`.
 - Launched Phase 9 with GitHub parent and child issues for pyOpenSci/JOSS
   scholarly publication readiness, v1.0.0 gap analysis, review materials,
   release/archive planning, paper planning, and publication closeout.
+- Completed the initial P9.1 publication readiness and scope scan, recording
+  source-backed pyOpenSci/JOSS review-path requirements and v1.0.0 readiness
+  gaps while keeping submission gated on later maturity.

@@ -9,6 +9,17 @@ Current package release: `0.1.0a1`
 Target paper timing: after pyOpenSci acceptance or when the pyOpenSci/JOSS
 pathway requirements are clearly satisfied.
 
+Official source references:
+
+- JOSS paper format:
+  `https://joss.readthedocs.io/en/latest/paper.html`
+- JOSS submitting guide:
+  `https://joss.readthedocs.io/en/latest/submitting.html`
+- pyOpenSci/JOSS partnership:
+  `https://www.pyopensci.org/software-peer-review/partners/joss.html`
+- pyOpenSci author guide JOSS section:
+  `https://www.pyopensci.org/software-peer-review/how-to/author-guide.html#journal-of-open-source-software-joss-submission`
+
 ## Positioning
 
 The JOSS paper should be a concise scholarly companion to the package, not a
@@ -47,6 +58,10 @@ Planned paper structure:
 The paper should stay within the JOSS expected length range and focus on
 software purpose, research application, scholarly significance, and field
 context.
+
+JOSS currently documents the expected paper length as 750-1750 words. The paper
+must explain the software functionality and domain of use to non-specialist
+readers, and it must explain the research applications of the software.
 
 ## Statement Of Need Direction
 
@@ -117,3 +132,7 @@ Reference groups to collect later:
 - [ ] Submit to JOSS with the pyOpenSci review context.
 - [ ] Track JOSS reviewer feedback as GitHub issues/PRs.
 - [ ] Add DOI and citation metadata after acceptance.
+
+pyOpenSci documents that accepted packages that are in JOSS scope can use the
+pyOpenSci/JOSS partnership path. JOSS still reviews the paper and acceptance to
+pyOpenSci does not guarantee JOSS acceptance.
