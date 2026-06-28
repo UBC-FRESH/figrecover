@@ -20,6 +20,7 @@ chooses an experimental VLM-only path.
    :caption: Guides
 
    guides/quickstart
+   guides/statement-of-need
    guides/manual-calibrated-extraction
    guides/workflow-boundaries
    guides/local-vlm-assistance
@@ -29,6 +30,8 @@ chooses an experimental VLM-only path.
    guides/examples
    guides/development-checks
    guides/release-process
+   guides/citation-support
+   guides/api-stability
    guides/limitations
 
 .. toctree::

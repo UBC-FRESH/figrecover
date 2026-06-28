@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use figrecover, please cite the software release and any later associated paper."
+title: "figrecover: Auditable recovery of approximate source tables from published figures"
+type: software
+authors:
+  - name: "UBC FRESH Lab"
+version: "0.1.0a1"
+date-released: "2026-06-28"
+license: "MIT"
+repository-code: "https://github.com/UBC-FRESH/figrecover"
+url: "https://ubc-fresh.github.io/figrecover/"
+abstract: >-
+  figrecover is a Python package for recovering approximate tabular data from
+  scientific and professional figures when original source tables were not
+  released. It emphasizes deterministic calibrated extraction, provenance,
+  diagnostics, and review workflows.

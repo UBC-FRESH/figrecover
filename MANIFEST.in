@@ -1,0 +1,17 @@
+include AGENTS.md
+include CHANGE_LOG.md
+include CITATION.cff
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include README.md
+include RELEASE_NOTES.md
+include ROADMAP.md
+include LICENSE
+include docs/requirements.txt
+recursive-include docs *.rst *.py
+include examples/README.md
+include examples/mocked_vlm_metadata.py
+include examples/synthetic_chart_extraction.py
+include examples/synthetic_pdf_corpus.py
+prune docs/_build
+prune tmp

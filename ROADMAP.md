@@ -174,7 +174,7 @@ Goal: prepare the v1.0.0-ready package for pyOpenSci software peer review,
 then JOSS companion paper submission.
 
 - [x] P9.1 Confirm publication readiness and scope. Child issue: #61.
-- [ ] P9.2 Prepare pyOpenSci review materials. Child issue: #62.
+- [x] P9.2 Prepare pyOpenSci review materials. Child issue: #62.
 - [ ] P9.3 Create v1.0.0 release candidate and archive. Child issue: #63.
 - [ ] P9.4 Submit to pyOpenSci and respond to review. Child issue: #64.
 - [ ] P9.5 Prepare and submit JOSS companion paper. Child issue: #65.

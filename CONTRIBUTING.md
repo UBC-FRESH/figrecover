@@ -79,3 +79,9 @@ Before opening or merging a phase PR:
 
 Do not add fully automatic recovery claims, stable API guarantees, or precision
 claims until the roadmap phase records evidence for them.
+
+## Community Conduct
+
+This project follows the expectations in `CODE_OF_CONDUCT.md`. Keep technical
+discussion professional, preserve private-data hygiene, and treat recovered
+values as approximate unless separately validated.

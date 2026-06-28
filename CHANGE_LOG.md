@@ -109,3 +109,6 @@ This is the append-only project narrative for `figrecover`.
 - Added a TFL 6 case-study publication plan to use the local management-plan
   PDF as the preferred realistic deployment target for Sphinx docs and JOSS
   results, gated on provenance, reuse rights, and public-data hygiene.
+- Added pyOpenSci review-readiness materials: statement of need, citation and
+  support guidance, alpha API-stability guidance, citation metadata, and code
+  of conduct.

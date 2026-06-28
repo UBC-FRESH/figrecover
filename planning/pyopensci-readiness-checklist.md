@@ -89,10 +89,10 @@ Existing docs cover:
 
 Pre-submission doc gaps:
 
-- [ ] Add a statement-of-need section suitable for package review.
-- [ ] Add citation instructions.
-- [ ] Add maintenance/support expectations.
-- [ ] Add explicit v1.0.0 API stability/deprecation policy.
+- [x] Add a statement-of-need section suitable for package review.
+- [x] Add citation instructions.
+- [x] Add maintenance/support expectations.
+- [x] Add explicit alpha API stability and v1.0.0 deprecation-policy target.
 - [ ] Add TFL 6 case-study documentation if source provenance and reuse rights
   are confirmed.
 - [ ] Add any public benchmark or evaluation notes approved for release.
@@ -111,9 +111,8 @@ Current status:
 
 Pre-submission gaps:
 
-- [ ] Add `CITATION.cff`.
-- [ ] Confirm whether a `CODE_OF_CONDUCT.md` is required by UBC-FRESH or
-  pyOpenSci expectations.
+- [x] Add `CITATION.cff`.
+- [x] Add `CODE_OF_CONDUCT.md`.
 - [ ] Add or refine support channels and issue templates if needed.
 - [ ] Add badges only when they are truthful and maintained.
 
@@ -149,13 +148,13 @@ Pre-submission gaps:
 - [ ] Version submitted.
 - [ ] Archive/DOI for submitted version.
 - [ ] Submitting author.
-- [ ] Maintainers.
-- [ ] Maintainer availability and response plan.
+- [ ] Maintainers beyond current lab-level attribution.
+- [x] Maintainer availability and response plan recorded at alpha level.
 - [x] License: MIT.
-- [ ] Scope statement.
-- [ ] Statement of need.
+- [x] Scope statement.
+- [x] Statement of need.
 - [ ] Related packages/tools.
-- [ ] Development status and limitations.
+- [x] Development status and limitations.
 
 ## Review Response Plan
 

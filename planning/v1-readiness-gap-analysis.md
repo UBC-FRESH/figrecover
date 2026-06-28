@@ -81,10 +81,10 @@ Current status:
 
 v1.0.0 gaps:
 
-- Add statement of need.
-- Add citation instructions.
-- Add explicit support and maintenance expectations.
-- Add API stability/deprecation section.
+- Expand the new statement of need if reviewers request more context.
+- Replace alpha citation instructions with archive/JOSS DOI instructions.
+- Refine support and maintenance expectations for accepted-review status.
+- Finalize API stability/deprecation policy.
 - Add public benchmark/evaluation notes if available.
 
 ## Public Examples And Benchmarks
@@ -106,7 +106,7 @@ v1.0.0 gaps:
 
 Current gap:
 
-- No `CITATION.cff` yet.
+- `CITATION.cff` exists for the alpha release.
 - No archive DOI yet.
 - No paper DOI yet.
 
@@ -137,6 +137,8 @@ Current status:
 
 - `CONTRIBUTING.md`, issue templates, roadmap, changelog, and AGENTS workflow
   exist.
+- `CODE_OF_CONDUCT.md` exists.
+- Citation/support docs exist for alpha users.
 
 v1.0.0 gaps:
 
