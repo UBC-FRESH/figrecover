@@ -181,3 +181,5 @@ then JOSS companion paper submission.
 - [ ] P9.6 Complete publication closeout. Child issue: #66.
 
 Status: active.
+
+Pull request: #67.
