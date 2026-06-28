@@ -72,7 +72,8 @@ The `figrecover` manuscript should:
 
 - Replace lab-level placeholder author metadata.
 - Add ORCIDs and final affiliations.
-- Add archive DOI and reviewed package version.
+- Replace the current alpha software availability/citation details with the
+  reviewed v1.0.0 release and archive DOI before submission.
 - Resolve TFL 6 publication gate before adding case-study results or figures.
 - Add JOSS build/check workflow once tooling is available.
 - Expand references for chart digitization and VLM chart understanding.
