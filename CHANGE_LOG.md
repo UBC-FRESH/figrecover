@@ -128,3 +128,6 @@ This is the append-only project narrative for `figrecover`.
 - Prepared the Phase 9 launch pull request for merge by clarifying that the
   merged branch establishes the publication-readiness scaffold while gated
   v1.0.0 release, pyOpenSci, JOSS, DOI, and final closeout work remain open.
+- Started the JOSS manuscript draft with preliminary `paper/paper.md` and
+  `paper/paper.bib`, while keeping author metadata, v1.0.0 DOI, TFL 6 evidence,
+  and submission readiness explicitly gated.
