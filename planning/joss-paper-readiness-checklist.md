@@ -13,10 +13,10 @@ is clearly ready.
 
 ## Status
 
-This is a paper-readiness plan, not a manuscript. Do not create `paper/paper.md`
-or `paper/paper.bib` until the package is close enough to v1.0.0 readiness that
-the paper can describe stable software, credible evidence, and citable release
-artifacts.
+This is a paper-readiness plan. A preliminary manuscript draft now exists under
+`paper/` by maintainer request, but it is not submission-ready. The draft must
+not be treated as satisfying the paper gate until the package can describe
+stable software, credible evidence, and citable release artifacts.
 
 ## Paper Gate
 
@@ -37,14 +37,15 @@ Before drafting repository paper files, confirm:
 
 ## Planned Paper Files
 
-Create these files only after the paper gate is satisfied:
+Preliminary draft files:
 
 - `paper/paper.md`
 - `paper/paper.bib`
 - optional publication-safe figures under `paper/`
 
-The paper should not duplicate installation instructions, CLI reference, or API
-how-to content that belongs in the Sphinx docs.
+The existing draft should remain a manuscript skeleton until the paper gate is
+satisfied. It should not duplicate installation instructions, CLI reference, or
+API how-to content that belongs in the Sphinx docs.
 
 ## Section-Level Readiness
 
@@ -125,6 +126,17 @@ The paper should be backed by a concise evidence matrix before drafting:
 | pyOpenSci review outcome | external review issue later | public after review | package quality context |
 | v1.0.0 archive DOI | archive later | public after release | citable reviewed software |
 
+## Exemplar Review
+
+- [x] Downloaded and reviewed representative published JOSS papers under
+      ignored `tmp/joss_exemplars/`.
+- [x] Recorded structure and tone findings in
+      `planning/joss-exemplar-paper-review.md`.
+- [x] Revised the draft toward a published-JOSS-paper pattern: Summary,
+      Statement of need, State of the field, Software design, Functionality,
+      Research impact statement, Applications and limitations, AI usage
+      disclosure, Acknowledgements, and References.
+
 ## Paper Build And Review Workflow
 
 When paper files exist:
@@ -143,9 +155,18 @@ Do not include private forestry PDFs, generated private crops, prompt logs,
 raw VLM responses, recovered private tables, or unapproved TFL 6 derivatives in
 the paper, paper figures, docs, release archives, or review materials.
 
+## Draft Status
+
+- [x] Preliminary `paper/paper.md` created.
+- [x] Preliminary `paper/paper.bib` created.
+- [ ] Author list and affiliations finalized.
+- [ ] v1.0.0 release and archive DOI added.
+- [ ] TFL 6 case-study evidence added only after publication gate.
+- [ ] Paper build/check workflow added.
+- [ ] JOSS submission timing confirmed.
+
 ## Closeout Requirements For P9.5
 
 Issue #65 should remain open until paper files exist, the paper builds, JOSS
 submission or acceptance links are recorded, and review feedback has been
-handled. This planning tranche completes only the paper-readiness checklist and
-manuscript workflow definition.
+handled. This draft tranche starts the manuscript but does not complete P9.5.
