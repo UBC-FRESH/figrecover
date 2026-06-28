@@ -141,13 +141,14 @@ The paper should be backed by a concise evidence matrix before drafting:
 
 When paper files exist:
 
-1. Add paper build instructions to the docs or development guide.
-2. Build/check the paper with the recommended JOSS tooling available at that
-   time.
-3. Keep bibliography entries minimal and relevant.
-4. Track each JOSS reviewer request as a GitHub issue or PR.
-5. Keep package docs as the source of detailed user guidance.
-6. Add JOSS DOI and citation instructions only after acceptance.
+1. Install paper rendering dependencies with `python -m pip install -e .[paper]`.
+2. Render draft artifacts with `python tools/render_joss_paper.py`.
+3. Build/check the paper with the recommended JOSS tooling available at that
+   time before submission.
+4. Keep bibliography entries minimal and relevant.
+5. Track each JOSS reviewer request as a GitHub issue or PR.
+6. Keep package docs as the source of detailed user guidance.
+7. Add JOSS DOI and citation instructions only after acceptance.
 
 ## Private-Data Hygiene
 
@@ -164,7 +165,8 @@ the paper, paper figures, docs, release archives, or review materials.
 - [ ] Author list and affiliations finalized.
 - [ ] Replace alpha software citation with v1.0.0 release and archive DOI.
 - [ ] TFL 6 case-study evidence added only after publication gate.
-- [ ] Paper build/check workflow added.
+- [x] Paper render workflow added for ignored local PDF/HTML artifacts.
+- [ ] JOSS paper build/check workflow added for final submission.
 - [ ] JOSS submission timing confirmed.
 
 ## Closeout Requirements For P9.5

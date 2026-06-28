@@ -65,9 +65,13 @@ docs = [
     "sphinx>=7",
     "sphinx-rtd-theme>=2",
 ]
+paper = [
+    "pypandoc_binary>=1.15",
+]
 dev = [
     "build>=1.2",
     "matplotlib>=3.8",
+    "pypandoc_binary>=1.15",
     "pytest>=8",
     "ruff>=0.5",
     "sphinx>=7",
