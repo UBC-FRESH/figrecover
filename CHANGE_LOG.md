@@ -125,3 +125,6 @@ This is the append-only project narrative for `figrecover`.
 - Added the P9.6 publication closeout checklist, defining final citation
   metadata, badges, DOI/link propagation, documentation synchronization,
   issue/PR closeout, verification, and private-data hygiene requirements.
+- Prepared the Phase 9 launch pull request for merge by clarifying that the
+  merged branch establishes the publication-readiness scaffold while gated
+  v1.0.0 release, pyOpenSci, JOSS, DOI, and final closeout work remain open.

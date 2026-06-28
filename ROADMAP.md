@@ -168,7 +168,10 @@ PyPI release: `figrecover==0.1.0a1`.
 
 GitHub parent issue: #60
 
-Active branch: `feature/p9-scholarly-publication-peer-review`
+Phase launch branch: `feature/p9-scholarly-publication-peer-review`
+
+Future publication work should use focused follow-up branches because the
+actual review, release, DOI, and paper work is gated on later v1.0.0 readiness.
 
 Goal: prepare the v1.0.0-ready package for pyOpenSci software peer review,
 then JOSS companion paper submission.
@@ -182,4 +185,4 @@ then JOSS companion paper submission.
 
 Status: active.
 
-Pull request: #67.
+Phase launch pull request: #67.
