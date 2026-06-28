@@ -19,6 +19,18 @@ For the public alpha:
 Future pyOpenSci, archive, and JOSS citation details should replace this
 temporary alpha citation once available.
 
+Publication Closeout
+--------------------
+
+Phase 9 tracks the final publication closeout workflow in
+``planning/publication-closeout-checklist.md``. That checklist defines how
+archive DOI, pyOpenSci review links, JOSS paper links, badges, README citation
+text, Sphinx citation guidance, and ``CITATION.cff`` should be synchronized
+once those records exist.
+
+Badges and DOI citations should be added only after the relevant acceptance or
+archive event has actually happened.
+
 Support
 -------
 

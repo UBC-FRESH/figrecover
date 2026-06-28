@@ -145,6 +145,8 @@ Current status:
   review-response workflow.
 - `planning/joss-paper-readiness-checklist.md` defines the intended JOSS
   manuscript gate and evidence workflow.
+- `planning/publication-closeout-checklist.md` defines final citation, badge,
+  DOI, roadmap, changelog, and issue/PR synchronization.
 
 v1.0.0 gaps:
 
@@ -175,4 +177,5 @@ v1.0.0 gaps:
 - [x] Define v1.0.0 release-candidate and archive plan.
 - [x] Define pyOpenSci submission and review-response plan.
 - [x] Define JOSS paper-readiness checklist and manuscript workflow.
+- [x] Define publication closeout checklist and synchronization workflow.
 - [ ] Track each v1.0.0 gap as linked GitHub issues before submission.

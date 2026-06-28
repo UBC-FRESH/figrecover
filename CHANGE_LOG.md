@@ -122,3 +122,6 @@ This is the append-only project narrative for `figrecover`.
 - Added the P9.5 JOSS paper-readiness checklist, defining manuscript gates,
   section-level readiness, evidence matrix, paper build/review workflow, and
   private-data constraints before repository paper files are created.
+- Added the P9.6 publication closeout checklist, defining final citation
+  metadata, badges, DOI/link propagation, documentation synchronization,
+  issue/PR closeout, verification, and private-data hygiene requirements.
