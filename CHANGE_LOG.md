@@ -92,3 +92,5 @@ This is the append-only project narrative for `figrecover`.
   checks across Python 3.11 and 3.12, plus development-check documentation.
 - Added a manually triggered, environment-gated release workflow and release
   process documentation for TestPyPI/PyPI alpha publishing.
+- Prepared `0.1.0a1` alpha release materials with version bump, README scope
+  refresh, release notes, and explicit limitation/private-data guidance.
